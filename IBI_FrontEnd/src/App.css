@@ -1,0 +1,31 @@
+main {
+  min-height: 80vh;
+}
+
+.center {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+}
+
+.header {
+  color: #385986;
+}
+
+.carousel {
+  display: block;
+  height:35rem;
+  width: auto;
+}
+
+.main-background {
+  background-image: url('assets/FramingPhoto.HEIC');
+  background-color: #385986;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: #000000;
+  width: auto;
+  height: 35rem;
+}
