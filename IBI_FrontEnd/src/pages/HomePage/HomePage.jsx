@@ -1,13 +1,21 @@
 import React from 'react';
 import MainPhotoCarousel from '../../components/MainPhotoCarousel';
-import MainPageHeaderComponent from '../../components/MainPageHeaderComponent';
+import TestCardComponent from '../../components/TestCardComponent';
+import Portfolio from '../../components/Portfolio';
 
 const HomePage = () => {
   return (
     <div>
-      <MainPageHeaderComponent />
+      <div>
+        <TestCardComponent />
+      </div>
       <br />
-      <MainPhotoCarousel />
+      <div>
+        <MainPhotoCarousel />
+      </div>
+      <div>
+        <Portfolio />
+      </div>
       <br />
     </div>
   );
