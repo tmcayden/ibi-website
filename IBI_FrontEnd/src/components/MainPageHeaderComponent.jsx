@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import HeaderComponent from './HeaderComponent';
 
-const TestCardComponent = () => {
+const MainPageHeaderComponent = () => {
   return (
     <div>
       <Card>
@@ -36,4 +36,4 @@ const TestCardComponent = () => {
   );
 };
 
-export default TestCardComponent;
+export default MainPageHeaderComponent;
