@@ -1,15 +1,16 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import HeaderComponent from './HeaderComponent';
+import galleryImg from '/src/assets/IMG_9222.jpg';
 
 const GalleryPageHeaderComponent = () => {
   return (
     <div>
       <Card>
-        <div className="bg-dark">
+        <div className="bg-dark bg-opacity-10">
           <Card.Img
-            className="img-fluid"
-            src="/src/assets/IMG_9222.HEIC"
+            className="img-fluid header"
+            src={galleryImg}
             alt="Card image"
           />
           <Card.ImgOverlay>
