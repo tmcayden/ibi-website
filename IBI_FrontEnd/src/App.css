@@ -7,7 +7,7 @@ main {
 }
 
 .center {
-  display: inline-block;
+  display: block;
   margin-left: auto;
   margin-right: auto;
   width: max-content;
@@ -15,7 +15,7 @@ main {
 
 .carousel {
   display: block;
-  height:25rem;
+  max-height: 40%;
   width: auto;
 }
 
@@ -27,6 +27,16 @@ main {
 }
 
 .header {
-  max-width: auto;
-  max-height: 50rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100rem;
+  max-height: 60rem;
+}
+
+.definition {
+  background: linear-gradient(90deg, #385986, lightblue);
+  margin: 20px;
+  border: 2px;
+  border-color: black;
 }
