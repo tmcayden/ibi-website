@@ -1,9 +1,11 @@
 body {
   font-family: 'Akatab', sans-serif;
+  overflow-x: hidden;
 }
 
-main {
-  min-height: 80vh;
+body .body {
+  min-height: 100vh;
+  box-shadow: 0 0 5px 5px gray;
 }
 
 .center {
@@ -13,11 +15,28 @@ main {
   width: max-content;
 }
 
+.title {
+  width: 80%;
+  margin: auto;
+  margin-top: none;
+  margin-bottom: 2cqmax;
+  text-align: center;
+  background-color: #385986;
+  color: rgb(233, 232, 232);
+  opacity: 90%;
+  box-shadow: 0 0 30px 5px gray;
+}
+
 .carousel {
   display: block;
   max-height: 40%;
   width: auto;
-  
+}
+
+.main-div {
+  max-width: 100rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gallery {
@@ -32,12 +51,64 @@ main {
   margin-left: auto;
   margin-right: auto;
   max-width: 100rem;
-  max-height: 60rem;
+  max-height: 60vh;
 }
 
 .definition {
   background: linear-gradient(90deg, #385986, lightblue);
-  margin: 20px;
-  border: 2px;
-  border-color: black;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  box-shadow: .5rem .5rem 5px #385986;
+}
+
+.tab {
+  border: 1px solid gray;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tab ul {
+  list-style-type: none;
+}
+
+.tab ul li {
+  display: inline;
+  color: white;
+  text-align: center;
+  background-color: black;
+}
+
+.tab ul li:hover {
+  color: white;
+  cursor: pointer;
+  background-color: gray;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.icon-facebook {
+  margin-top: .1rem;
+  margin-left: 0;
+  display: inline-block;
+  height: 3rem;
+  width: auto;
+}
+
+.icon-instagram {
+  margin-top: 0;
+  margin-left: 0;
+  display: inline-block;
+  height: 2.5rem;
+  width: auto;
+}
+
+.about-img {
+  position: fixed;
+}
+
+.about, .contact{
+  width: 49%;
+  vertical-align:top;
 }

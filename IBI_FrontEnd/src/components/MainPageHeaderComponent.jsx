@@ -33,14 +33,14 @@ const MainPageHeaderComponent = () => {
           </Card.ImgOverlay>
         </div>
       </Card>
-      <div className="definition mt-2 mb-0 p-4 bg-opacity-75 d-block d-sm-none">
+      <div className="definition d-block d-sm-none">
         <h1 className="fs-1 fw-bolder text-black text-opacity-75">
           Integrity (noun):
         </h1>
-        <p className="mx-2 p-2 fs-4 fw-bold text-black text-opacity-75">
+        <p className="fs-4 fw-bold text-black text-opacity-75">
           1. The quality of being honest and having strong moral principles
         </p>
-        <p className="mx-2 p-2 fs-4 fw-bold text-black text-opacity-75">
+        <p className="fs-4 fw-bold text-black text-opacity-75">
           2. The condition of being unified or sound in construction
         </p>
       </div>

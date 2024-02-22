@@ -1,14 +1,18 @@
 import React from 'react';
 import GalleryPageHeaderComponent from '../../components/GalleryPageHeaderComponent';
 import Portfolio from '../../components/Portfolio';
+import ContactComponent from '../../components/ContactComponent';
 
 const GalleryPage = () => {
   return (
-    <div>
+    <body className="main-div body">
       <GalleryPageHeaderComponent />
       <br />
       <Portfolio />
-    </div>
+      <br />
+      <ContactComponent id="contact" />
+      <br />
+    </body>
   );
 };
 
