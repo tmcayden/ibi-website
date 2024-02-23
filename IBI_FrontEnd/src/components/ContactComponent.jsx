@@ -7,7 +7,7 @@ const ContactComponent = () => {
   return (
     <div>
       <div className="m-4">
-        <div className="d-inline-block about">
+        <div className="d-inline-block contact">
           <p>Business Hours:</p>
           <p>M-F 8-5</p>
           <p>
@@ -25,7 +25,7 @@ const ContactComponent = () => {
             <img className="icon-instagram" src={instagram} />
           </a>
         </div>
-        <div className="d-inline-block about">
+        <div className="d-inline-block contact">
           <img className="contact" src={animatedLogo}></img>
         </div>
       </div>

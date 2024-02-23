@@ -18,9 +18,6 @@ function HeaderComponent() {
               <Nav.Link href="/gallery">
                 <h4>Gallery</h4>
               </Nav.Link>
-              <Nav.Link href="#About">
-                <h4>About</h4>
-              </Nav.Link>
               <Nav.Link href="#Contact">
                 <h4>Contact</h4>
               </Nav.Link>

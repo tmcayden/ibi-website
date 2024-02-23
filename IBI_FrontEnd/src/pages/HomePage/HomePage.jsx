@@ -12,7 +12,7 @@ const HomePage = () => {
       <MainPhotoCarousel />
       <br />
       <AboutComponent />
-      <br />
+      <hr />
       <ContactComponent />
       <br />
     </body>

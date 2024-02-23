@@ -10,6 +10,7 @@ const GalleryPage = () => {
       <br />
       <Portfolio />
       <br />
+      <hr />
       <ContactComponent id="contact" />
       <br />
     </body>
