@@ -20,7 +20,7 @@ const GalleryPageHeaderComponent = () => {
               </div>
               <br />
               <br />
-              <div className="mt-5 mx-auto p-4 bg-dark bg-opacity-75 d-none d-sm-block">
+              <div className="mt-5 mx-auto p-4 bg-dark bg-opacity-75 d-none d-sm-block text-center">
                 <Card.Title className="fs-1 fw-bolder text-secondary text-center">
                   Find your next project
                 </Card.Title>
@@ -32,7 +32,7 @@ const GalleryPageHeaderComponent = () => {
           </div>
         </Card>
       </div>
-      <div className="m-0 mt-2 definition p-4 d-block d-sm-none">
+      <div className="m-2 mb-0 definition p-4 d-block d-sm-none text-center">
         <h1 className="fs-1 fw-bolder text-black text-opacity-75">
           Find your next project
         </h1>

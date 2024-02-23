@@ -5,15 +5,14 @@ import ContactComponent from '../../components/ContactComponent';
 
 const GalleryPage = () => {
   return (
-    <body className="main-div body">
+    <div className="main-div body">
       <GalleryPageHeaderComponent />
       <br />
       <Portfolio />
       <br />
       <hr />
-      <ContactComponent id="contact" />
-      <br />
-    </body>
+      <ContactComponent />
+    </div>
   );
 };
 
