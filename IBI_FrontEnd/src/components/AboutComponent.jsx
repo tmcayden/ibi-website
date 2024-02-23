@@ -7,7 +7,7 @@ const AboutComponent = () => {
       <h1 className="title">Who we are</h1>
       <div className="m-4">
         <div className="d-md-inline-block about d-none">
-          <p indent>
+          <p>
             Welcome to IBI Contracting, your premier source for top-quality
             construction services! Founded by two entrepreneurs from Vernal,
             Utah, IBI Contracting brings together expertise, experience, and a
@@ -39,7 +39,7 @@ const AboutComponent = () => {
         </div>
       </div>
       <div className="m-4 d-md-none d-inline-block">
-        <p indent>
+        <p>
           Welcome to IBI Contracting, your premier source for top-quality
           construction services! Founded by two entrepreneurs from Vernal, Utah,
           IBI Contracting brings together expertise, experience, and a

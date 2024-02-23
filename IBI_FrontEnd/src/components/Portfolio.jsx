@@ -13,7 +13,7 @@ const Portfolio = () => {
   const [section, setSection] = useState('Select Category');
 
   return (
-    <div className="">
+    <div className="mt-0">
       <div id="gallery">
         <br />
         <h2 className="title ">Gallery</h2>
@@ -46,7 +46,7 @@ const Portfolio = () => {
         <NavDropdown
           title={section}
           id="nav-dropdown"
-          className="d-block d-md-none"
+          className="d-block d-md-none selection"
         >
           <NavDropdown.Item
             eventKey="link-1"

@@ -1,12 +1,12 @@
 import React from 'react';
 import MainPhotoCarousel from '../../components/MainPhotoCarousel';
-import MainPageHeaderComponent from '../../components/MainPageHeaderComponent';
 import AboutComponent from '../../components/AboutComponent';
 import ContactComponent from '../../components/ContactComponent';
+import MainPageHeaderComponent from '../../components/MainPageHeaderComponent.jsx';
 
 const HomePage = () => {
   return (
-    <body className="main-div body">
+    <div className="main-div body">
       <MainPageHeaderComponent />
       <br />
       <MainPhotoCarousel />
@@ -14,8 +14,7 @@ const HomePage = () => {
       <AboutComponent />
       <hr />
       <ContactComponent />
-      <br />
-    </body>
+    </div>
   );
 };
 

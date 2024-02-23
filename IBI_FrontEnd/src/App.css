@@ -3,7 +3,7 @@ body {
   overflow-x: hidden;
 }
 
-body .body {
+div .body {
   min-height: 100vh;
   box-shadow: 0 0 5px 5px gray;
 }
@@ -44,6 +44,10 @@ body .body {
   margin-left: auto;
   margin-right: auto;
   height: 10rem;
+}
+
+.selection {
+  border: 1px solid lightgray;
 }
 
 .header {
@@ -111,4 +115,22 @@ body .body {
 .about, .contact{
   width: 50%;
   vertical-align:top;
+}
+
+.contact-logo {
+  vertical-align:top;
+  max-width: 20rem;
+}
+
+.bid-form {
+  border: .5px solid black ;
+  background-color: #385986;
+  color: rgb(233, 232, 232);
+  opacity: 90%;
+  box-shadow: 0 0 2px #385986;
+}
+
+button:hover {
+  background-color: white;
+  color:#385986;
 }
