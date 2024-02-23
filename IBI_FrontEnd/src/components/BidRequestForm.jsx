@@ -6,7 +6,7 @@ const BidRequestForm = () => {
   const form = (
     <div className="w-100 m-1 p-1 form text-center">
       <button
-        className="text-center bid-form"
+        className="m-3 text-center bid-form"
         onClick={() => {
           setShowForm('false');
         }}
