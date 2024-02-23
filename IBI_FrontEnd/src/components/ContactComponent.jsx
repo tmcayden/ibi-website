@@ -11,11 +11,11 @@ const ContactComponent = () => {
           <p>Business Hours:</p>
           <p>Monday-Friday 8-5</p>
           <p>
-            Terran Harvey | <a href="tel:435-219-6300">(435)219-6300</a>
+            Terran Harvey | <a href="tel:435-828-3309">(435)828-3309</a>
           </p>
 
           <p>
-            Mitch Larsen | <a href="tel:435-219-6300">(435)828-3309</a>
+            Mitch Larsen | <a href="tel:435-219-6300">(435)219-6300</a>
           </p>
           <p>contracting.IBI@gmail.com</p>
           <a href="https://www.facebook.com/contracting.ibi">
@@ -33,11 +33,11 @@ const ContactComponent = () => {
             <p>Business Hours:</p>
             <p>Monday-Friday 8-5</p>
             <p>
-              Terran Harvey | <a href="tel:435-219-6300">(435)219-6300</a>
+              Terran Harvey | <a href="tel:435-828-3309">(435)828-3309</a>
             </p>
 
             <p>
-              Mitch Larsen | <a href="tel:435-219-6300">(435)828-3309</a>
+              Mitch Larsen | <a href="tel:435-219-6300">(435)219-6300</a>
             </p>
             <p>contracting.IBI@gmail.com</p>
             <a href="https://www.facebook.com/contracting.ibi">
