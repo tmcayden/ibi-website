@@ -12,25 +12,25 @@ const MainPhotoCarousel = () => {
         <Carousel.Item interval={5000}>
           <img src={photo2} className="center" />
           <Carousel.Caption>
-            <h4>Potential Caption.</h4>
+            {/* <h4>Potential Caption.</h4> */}
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
           <img src={photo3} className="center" />
           <Carousel.Caption>
-            <h4>Potential Caption.</h4>
+            {/* <h4>Potential Caption.</h4> */}
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
           <img src={photo4} className="center" />
           <Carousel.Caption>
-            <h4>Potential Caption.</h4>
+            {/* <h4>Potential Caption.</h4> */}
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
           <img src={photo5} className="center" />
           <Carousel.Caption>
-            <h4>Potential Caption.</h4>
+            {/* <h4>Potential Caption.</h4> */}
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
