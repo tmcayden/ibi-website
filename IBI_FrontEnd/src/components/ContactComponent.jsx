@@ -40,10 +40,13 @@ const ContactComponent = () => {
               Mitch Larsen | <a href="tel:435-219-6300">(435)219-6300</a>
             </p>
             <p>contracting.IBI@gmail.com</p>
-            <a href="https://www.facebook.com/contracting.ibi">
+            <a href="https://www.facebook.com/contracting.ibi" target="_blank">
               <img className="icon-facebook" src={facebook} />
             </a>
-            <a href="https://www.instagram.com/ibi_contracting/">
+            <a
+              href="https://www.instagram.com/ibi_contracting/"
+              target="_blank"
+            >
               <img className="icon-instagram" src={instagram} />
             </a>
           </div>

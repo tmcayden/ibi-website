@@ -8,7 +8,7 @@ import ContactPage from './pages/HomePage/ContactPage';
 
 function App() {
   return (
-    <>
+    <div className="main">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
@@ -17,7 +17,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <FooterComponent />
-    </>
+    </div>
   );
 }
 
