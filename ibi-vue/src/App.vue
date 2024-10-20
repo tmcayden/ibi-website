@@ -1,7 +1,6 @@
 <script setup>
 import Toast from 'primevue/toast'
 import NavBar from './components/NavBar.vue'
-import Panel from 'primevue/panel'
 import { RouterView } from 'vue-router';
 </script>
 
@@ -15,7 +14,7 @@ import { RouterView } from 'vue-router';
 
 <style>
 body {
-  background: #005c5f center center no-repeat fixed;
+  background: #213547 center center no-repeat fixed;
   background-size: cover;
 }
 </style>
