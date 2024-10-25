@@ -1,34 +1,54 @@
 <script setup>
 import Carousel from 'primevue/carousel'
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import Image from 'primevue/image';
+import { useScreenSizeStore } from '../stores/screenSizeStore';
 
+const screenSize = useScreenSizeStore();
 const homeImages = ref([
   { src: '/home-1.jpg' },
   { src: '/home-2.jpg' },
   { src: '/home-3.jpg' },
   { src: '/home-4.jpg' },
-
+  { src: '/home-5.jpg '},
+  { src: 'terran_mitch.png'}
 ])
+const carouselKey = ref(true);
+
+
+const numVisible = computed(() => {
+  if (screenSize.is2xl) {
+    return 7;
+  } else if (screenSize.isLg) {
+    return 5
+  } else if (screenSize.isMd) {
+    return 3;
+  } else if (screenSize.isSm) {
+    return 1;
+  }
+  return 1
+})
+
+const autoPlayInterval = computed(() => {
+  const imageLength = homeImages.value.length;
+  if (imageLength < numVisible.value) {
+    return 0;
+  }
+  return 4000;
+});
+
+watch(numVisible, () => {
+  carouselKey.value = !carouselKey.value;
+})
 
 </script>
 
 <template>
     <div class="w-full flex justify-center mt-5">
-        <Carousel :value="homeImages" class="w-1/2 flex" circular autoplayInterval='5000' >
+        <Carousel :value="homeImages" circular :autoplayInterval="autoPlayInterval" :numVisible="numVisible" :key="carouselKey" >
             <template #item="slotProps">
-                <div :ref="slotProps.data.label" class="flex justify-center">
-                <img :src="slotProps.data.src" :alt="slotProps.data.label" class="carousel-image" />
-                </div>
+                <Image :src="slotProps.data.src" :alt="slotProps.data.label"  preview />
             </template>
         </Carousel>
     </div>
 </template>
-
-<style scoped>
-.carousel-image {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-</style>
