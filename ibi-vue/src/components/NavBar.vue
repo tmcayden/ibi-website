@@ -6,15 +6,17 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Image from 'primevue/image'
 import Panel from 'primevue/panel'
-import Card from 'primevue/card'
-import Button from 'primevue/button'
 import Toast from 'primevue/toast'
-import {useToast} from 'primevue/usetoast'
+
+import BidRequest from './BidRequest.vue'
+
+// Setup
 
 const router = useRouter()
 const route = useRoute()
-const toast = useToast()
 const isDarkMode = useLocalStorage(false, 'isDarkMode')
+
+// State
 
 const builtWithOptions = [
   'Relationships',
@@ -32,9 +34,7 @@ const builtWithOptions = [
   'Careers',
   'Connections'
 ]
-
 const activeOption = ref(0)
-
 const navItems = ref([
   {
     label: 'Gallery',
@@ -50,10 +50,10 @@ const navItems = ref([
   }
 ])
 
+// Computed
 const themeIcon = computed(() => {
   return isDarkMode.value ? 'pi pi-moon' : 'pi pi-sun'
 })
-
 const backgroundImage = computed(() => {
   const imageUrl = (() => {
     switch (route.name) {
@@ -67,9 +67,10 @@ const backgroundImage = computed(() => {
         return ''
     }
   })();
-
   return imageUrl ? `linear-gradient(to bottom right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1)), url(${imageUrl})` : '';
 })
+
+// Actions
 
 if (isDarkMode.value) {
   const element = document.querySelector('html')
@@ -80,10 +81,6 @@ const toggleColorScheme = () => {
   isDarkMode.value = !isDarkMode.value
   const element = document.querySelector('html')
   element.classList.toggle('ibi-dark')
-}
-
-function requestABid() {
-  toast.add({severity:'info', summary: 'Bid Requested', detail: 'We will contact you shortly.', life: 3000});
 }
 
 setInterval(() => {
@@ -110,10 +107,10 @@ onMounted(() => {
   <Toast />
   <Panel
     :style="{ backgroundImage: backgroundImage, backgroundSize: 'cover', backgroundPosition: 'center', border: 'none'}"
-    class="h-96 panel-with-background"
+    class="md:h-1/3 panel-with-background"
   >
     <template #header>
-      <Menubar :model="navItems" class="w-full">
+      <Menubar :model="navItems" class="w-full sm:mb-3">
         <template #start>
           <Router-Link :to="{ name: 'home' }" class="mr-3">
             <Image v-if="isDarkMode" src="/Logo_transparent_dark.png" alt="IBI Logo" width="75" />
@@ -128,18 +125,11 @@ onMounted(() => {
       </Menubar>
     </template>
 
-    <div v-if="route.name == 'home'" class="flex justify-around items-center h-48">
-      <div key="built-with-text" class="text-highlight home-text text-center w-1/3">
+    <div v-if="route.name == 'home'" class="flex sm:flex-row flex-col gap-10 justify-around items-center">
+      <div key="built-with-text" class="text-highlight font-bold text-4xl text-center sm:w-1/3 text-white">
         {{ builtWithOptions[activeOption] }} Built With Integrity
       </div>
-      <Card>
-        <template #header>
-          <h3>Featured Project</h3>
-        </template>
-        <template #content>
-        <Button label="Request a Bid" icon="pi pi-envelope" class="p-button-rounded p-button-secondary" @click="requestABid" />
-        </template>
-      </Card>
+      <BidRequest />
     </div>
   </Panel>
 </template>
@@ -150,9 +140,4 @@ onMounted(() => {
   overflow: hidden;
 }
 
-.home-text {
-  color: white;         /* Make text white */
-  font-weight: bold;    /* Make text bold */
-  font-size: 2rem;      /* Adjust size as needed */
-}
 </style>

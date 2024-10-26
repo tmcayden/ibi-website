@@ -17,7 +17,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="m-3">
+  <div class="sm:m-3">
     <Toast />
     <NavBar />
     <RouterView />
