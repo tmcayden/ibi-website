@@ -7,7 +7,7 @@ import { useRouter, useRoute } from 'vue-router'
 import Image from 'primevue/image'
 import Panel from 'primevue/panel'
 import Toast from 'primevue/toast'
-
+import { TransitionGroup } from 'vue'
 import BidRequest from './BidRequest.vue'
 
 // Setup
@@ -18,6 +18,20 @@ const isDarkMode = useLocalStorage(false, 'isDarkMode')
 
 // State
 
+const navItems = ref([
+  {
+    label: 'Gallery',
+    icon: 'pi pi-images',
+    class: 'text-xl',
+    command: () => router.push('/gallery')
+  },
+  {
+    label: 'Contact',
+    icon: 'pi pi-envelope',
+    class: 'text-xl',
+    command: () => router.push('/contact')
+  }
+])
 const builtWithOptions = [
   'Relationships',
   'Projects',
@@ -35,20 +49,8 @@ const builtWithOptions = [
   'Connections'
 ]
 const activeOption = ref(0)
-const navItems = ref([
-  {
-    label: 'Gallery',
-    icon: 'pi pi-images',
-    class: 'text-xl',
-    command: () => router.push('/gallery')
-  },
-  {
-    label: 'Contact',
-    icon: 'pi pi-envelope',
-    class: 'text-xl',
-    command: () => router.push('/contact')
-  }
-])
+const showText = ref(true)
+const newText = ref('')
 
 // Computed
 const themeIcon = computed(() => {
@@ -84,17 +86,21 @@ const toggleColorScheme = () => {
 }
 
 setInterval(() => {
-  if (route.name != 'home') {
+  if (route.name !== 'home') {
     return
   }
-  const oldOption = activeOption.value
-  const newOption = Math.round(Math.random() * (builtWithOptions.length - 1))
 
-  if (oldOption != newOption) {
+  showText.value = false
+
+  setTimeout(() => {
+    const newOption = Math.round(Math.random() * (builtWithOptions.length - 1))
+    if (newOption === activeOption.value) {
+      showText.value = true
+      return activeOption.value = (activeOption.value + 1) % builtWithOptions.length
+    }
     activeOption.value = newOption
-  } else {
-    activeOption.value = (newOption + 1) % builtWithOptions.length
-  }
+    showText.value = true
+  }, 2000)
 }, 5000)
 
 onMounted(() => {
@@ -126,8 +132,15 @@ onMounted(() => {
     </template>
 
     <div v-if="route.name == 'home'" class="flex sm:flex-row flex-col gap-10 justify-around items-center">
-      <div key="built-with-text" class="text-highlight font-bold text-4xl text-center sm:w-1/3 text-white">
-        {{ builtWithOptions[activeOption] }} Built With Integrity
+      <div class="font-bold text-4xl text-center sm:w-1/3 text-white" style="position: relative">
+      <transition-group name='fade'>
+        <div class="animate-duration-2000 w-full text-center" :key="activeOption" v-animateonscroll="{ enterClass: 'animate-flipleft' }" style="position: absolute">
+          {{ builtWithOptions[activeOption] }}
+        </div>
+        <p class="mt-10">
+         Built With Integrity
+        </p>
+      </transition-group>
       </div>
       <BidRequest />
     </div>
@@ -140,4 +153,10 @@ onMounted(() => {
   overflow: hidden;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.8s ease;
+}
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

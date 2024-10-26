@@ -42,7 +42,7 @@ const { handleSubmit, errors } = useForm({
 // State
 const bidRequest = ref({
   name: '',
-  contactMethod: '',
+  contactMethod: 'phone',
   email: '',
   phone: '',
 })
@@ -65,7 +65,7 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-    <Card class="p-3">
+    <Card class="p-3 animate-duration-1000" v-animateonscroll="{ enterClass: 'animate-fadeinright' }">
         <template #header>
             <p class="text-center font-medium w-full">
                 Request a <span class="font-extrabold">FREE</span> Bid!
@@ -76,12 +76,12 @@ const onSubmit = handleSubmit((values) => {
                 <SemInputText id="name" label="Name" v-model="bidRequest.name" class="w-full" />
                 <Field name="contactMethod" as="div" class="flex justify-between">
                   <div>
-                    <RadioButton v-model="bidRequest.contactMethod" inputId="methodEmail" name="contactMethod" value="email" />
-                    <label for="methodEmail" class="ml-2">Email</label>
-                  </div>
-                  <div>
                     <RadioButton v-model="bidRequest.contactMethod" inputId="methodPhone" name="contactMethod" value="phone" />
                     <label for="methodPhone" class="ml-2">Phone</label>
+                  </div>
+                  <div>
+                    <RadioButton v-model="bidRequest.contactMethod" inputId="methodEmail" name="contactMethod" value="email" />
+                    <label for="methodEmail" class="ml-2">Email</label>
                   </div>
                 </Field>
                 <Message v-if="errors.contactMethod" severity="error">{{ errors.contactMethod }}</Message>

@@ -7,6 +7,7 @@ import ToastService from 'primevue/toastservice'
 import { createPinia } from 'pinia'
 import { updatePrimaryPalette, definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
+import AnimateOnScroll from 'primevue/animateonscroll'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -28,6 +29,9 @@ const ibiPreset = definePreset(Aura, {
     }
   }
 })
+
+app.directive('animateonscroll', AnimateOnScroll)
+
 
 app.use(PrimeVue, {
   theme: {
