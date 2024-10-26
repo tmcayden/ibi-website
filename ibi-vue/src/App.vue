@@ -26,7 +26,7 @@ onUnmounted(() => {
 
 <style>
 body {
-  background: #213547 center center no-repeat fixed;
+  background: #385986 center center no-repeat fixed;
   background-size: cover;
 }
 </style>

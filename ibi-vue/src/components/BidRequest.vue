@@ -87,7 +87,7 @@ const onSubmit = handleSubmit((values) => {
                 <Message v-if="errors.contactMethod" severity="error">{{ errors.contactMethod }}</Message>
                 <SemInputText v-if="bidRequest.contactMethod == 'email'" label="Email" id="contactEmail" v-model="bidRequest.email" class="w-full" />
                 <SemInputText v-if="bidRequest.contactMethod == 'phone'" label="Phone" id="contactPhone" v-model="bidRequest.phone" class="w-full" />
-                <Button label="Request" :icon="contactIcon" class="p-button-rounded p-button-secondary text-center w-full" type="submit" />
+                <Button label="Request" :icon="contactIcon" rounded class="text-center w-full" type="submit" />
             </form>
         </template>
     </Card>
