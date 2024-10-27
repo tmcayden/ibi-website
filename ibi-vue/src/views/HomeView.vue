@@ -3,6 +3,7 @@ import Carousel from 'primevue/carousel'
 import { computed, ref, watch } from 'vue';
 import Image from 'primevue/image';
 import { useScreenSizeStore } from '../stores/screenSizeStore';
+import Review from '../components/ReviewBar.vue';
 
 const screenSize = useScreenSizeStore();
 const homeImages = ref([
@@ -44,11 +45,12 @@ watch(numVisible, () => {
 </script>
 
 <template>
-    <div class="w-full flex justify-center mt-5">
-        <Carousel :value="homeImages" circular :autoplayInterval="autoPlayInterval" :numVisible="numVisible" :key="carouselKey" >
-            <template #item="slotProps">
-                <Image :src="slotProps.data.src" :alt="slotProps.data.label"  preview />
-            </template>
-        </Carousel>
+    <div class="w-full flex flex-col justify-center">
+      <Review />
+      <Carousel :value="homeImages" circular :autoplayInterval="autoPlayInterval" :numVisible="numVisible" :key="carouselKey" >
+        <template #item="slotProps">
+          <Image :src="slotProps.data.src" :alt="slotProps.data.label"  preview />
+        </template>
+      </Carousel>
     </div>
 </template>

@@ -7,13 +7,16 @@ import { useRouter, useRoute } from 'vue-router'
 import Image from 'primevue/image'
 import Panel from 'primevue/panel'
 import Toast from 'primevue/toast'
+import Button from 'primevue/button'
 import { TransitionGroup } from 'vue'
 import BidRequest from './BidRequest.vue'
+import { useUserStore } from '../stores/userStore'
 
 // Setup
 
 const router = useRouter()
 const route = useRoute()
+const user = useUserStore()
 const isDarkMode = useLocalStorage(false, 'isDarkMode')
 
 // State
@@ -50,7 +53,6 @@ const builtWithOptions = [
 ]
 const activeOption = ref(0)
 const showText = ref(true)
-const newText = ref('')
 
 // Computed
 const themeIcon = computed(() => {
@@ -113,10 +115,10 @@ onMounted(() => {
   <Toast />
   <Panel
     :style="{ backgroundImage: backgroundImage, backgroundSize: 'cover', backgroundPosition: 'center', border: 'none'}"
-    class="md:h-1/3 panel-with-background"
+    class="h-screen panel-with-background"
   >
     <template #header>
-      <Menubar :model="navItems" class="w-full sm:mb-3">
+      <Menubar :model="navItems" class="w-full lg:mb-3">
         <template #start>
           <Router-Link :to="{ name: 'home' }" class="mr-3">
             <Image v-if="isDarkMode" src="/Logo_transparent_dark.png" alt="IBI Logo" width="75" />
@@ -124,26 +126,37 @@ onMounted(() => {
           </Router-Link>
         </template>
         <template #end>
-          <div class="w-12 flex justify-between gap-3">
+          <div class="flex justify-between items-center gap-3 text-right" :class="user.isLoggedIn ? 'w-36' : 'w-12'">
             <i @click="toggleColorScheme" :class="themeIcon" class="cursor-pointer"></i>
+            <Button v-if="user.isLoggedIn" label="Logout" icon="pi pi-sign-out" class="" as="router-link" :to="{name: 'home'}" @click="user.handleLogout"/>
           </div>
         </template>
       </Menubar>
     </template>
 
-    <div v-if="route.name == 'home'" class="flex sm:flex-row flex-col gap-10 justify-around items-center">
-      <div class="font-bold text-4xl text-center sm:w-1/3 text-white" style="position: relative">
-      <transition-group name='fade'>
-        <div class="animate-duration-2000 w-full text-center" :key="activeOption" v-animateonscroll="{ enterClass: 'animate-flipleft' }" style="position: absolute">
-          {{ builtWithOptions[activeOption] }}
+    <div v-if="route.name == 'home'" class="mb-6">
+      <div class="flex lg:flex-row lg:mt-14 flex-col justify-between items-center">
+        <div class="font-bold text-4xl lg:text-6xl text-center lg:w-1/3 text-white" style="position: relative">
+          <transition-group name='fade'>
+            <div class="animate-duration-2000 w-full text-center" :key="activeOption" v-animateonscroll="{ enterClass: 'animate-flipleft' }" style="position: absolute">
+              {{ builtWithOptions[activeOption] }}
+            </div>
+            <p key="builtwith" class="lg:mt-20 mt-10">
+            Built With Integrity
+            </p>
+          </transition-group>
         </div>
-        <p class="mt-10">
-         Built With Integrity
-        </p>
-      </transition-group>
       </div>
-      <BidRequest />
+      <div class="w-full mt-12 flex lg:justify-end justify-center">
+        <BidRequest class="lg:mr-16" />
+      </div>
     </div>
+
+    <template #footer>
+      <div class="font-thin text-7xl w-full text-white text-center mt-36 lg:mt-0 xl:mt-36">
+        <i class="pi pi-sort-down-fill" style="font-size: 2rem" />
+      </div>
+    </template>
   </Panel>
 </template>
 

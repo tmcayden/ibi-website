@@ -4,11 +4,21 @@ import NavBar from './components/NavBar.vue'
 import { RouterView } from 'vue-router';
 import { onMounted, onUnmounted } from 'vue';
 import { useScreenSizeStore } from './stores/screenSizeStore';
+import { supabase } from './supabase';
+import { useUserStore } from './stores/userStore';
 
 const screenSize = useScreenSizeStore();
+const user = useUserStore();
 
 onMounted(() => {
   screenSize.addWindowResizeListener();
+  supabase.auth.getSession().then(({data}) => {
+    user.session = data.session;
+  })
+
+  supabase.auth.onAuthStateChange((_, _session) => {
+    user.session = _session
+  })
 })
 
 onUnmounted(() => {
@@ -17,7 +27,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="sm:m-3">
+  <div>
     <Toast />
     <NavBar />
     <RouterView />

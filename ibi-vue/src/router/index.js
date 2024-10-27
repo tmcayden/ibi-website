@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue'
+import { useUserStore } from '../stores/userStore'
 
 const routes = [
   {
@@ -19,6 +20,18 @@ const routes = [
     name: 'contact',
     meta: { title: 'Contact' },
     component: () => import('../views/ContactView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    meta: { title: 'Admin' },
+    component: () => import('../views/AdminView.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    meta: { title: 'Login' },
+    component: () => import('../views/LoginView.vue')
   }
 ]
 
@@ -38,4 +51,5 @@ router.beforeEach(async (to) => {
     return { name: 'home' }
   }
 })
+
 export default router

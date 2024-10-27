@@ -65,7 +65,7 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-    <Card class="p-3 animate-duration-1000" v-animateonscroll="{ enterClass: 'animate-fadeinright' }">
+    <Card class="p-3 animate-duration-1000 w-96" v-animateonscroll="{ enterClass: 'animate-fadeinright' }">
         <template #header>
             <p class="text-center font-medium w-full">
                 Request a <span class="font-extrabold">FREE</span> Bid!
