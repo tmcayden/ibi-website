@@ -6,7 +6,7 @@ import { useToast } from 'primevue/usetoast'
 import { onMounted, ref } from 'vue'
 import { useUserStore } from '../stores/userStore'
 import { supabase } from '../supabase'
-import ProgressSpinner from 'primevue/progressspinner';
+import ProgressSpinner from 'primevue/progressspinner'
 
 const toast = useToast()
 const user = useUserStore()
@@ -48,7 +48,7 @@ onMounted(async () => await refresh())
       </template>
       <template #footer>
         <Divider />
-        <div class="flex">
+        <div class="flex mt-1 sm:mt-0">
           <div class="text-white w-full pl-2">
             <p>
               {{ review.customer_name }}

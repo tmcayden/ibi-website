@@ -8,16 +8,6 @@ const user = useUserStore()
 </script>
 
 <template>
-  <Button
-    as="router-link"
-    severity="secondary"
-    label="Home"
-    icon="pi pi-home"
-    rounded
-    class="text-center w-48 m-3"
-    type="submit"
-    :to="{ name: 'home' }"
-  />
   <div class="w-full flex justify-center">
     <!-- Unauthorized View -->
     <Card v-if="!user.session" class="mt-3 w-1/3">

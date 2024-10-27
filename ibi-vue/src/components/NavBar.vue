@@ -35,6 +35,19 @@ const navItems = ref([
     command: () => router.push('/contact')
   }
 ])
+const adminNavItems = ref([
+  {
+    label: 'Admin',
+    icon: 'pi pi-cog',
+    class: 'text-xl',
+    command: () => router.push('/admin')
+  }
+])
+
+if (user.isLoggedIn) {
+  navItems.value.push(...adminNavItems.value)
+}
+
 const builtWithOptions = [
   'Relationships',
   'Projects',
@@ -67,6 +80,8 @@ const backgroundImage = computed(() => {
         return ''
       case 'contact':
         return ''
+      case 'admin':
+        return '/home-5.jpg'
       default:
         return ''
     }
@@ -118,14 +133,14 @@ onMounted(() => {
 <template>
   <Toast />
   <Panel
-    v-if="!adminPage"
     :style="{
       backgroundImage: backgroundImage,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       border: 'none'
     }"
-    class="h-screen panel-with-background"
+    class="panel-with-background"
+    :class="adminPage ? '' : 'h-screen'"
   >
     <template #header>
       <Menubar :model="navItems" class="w-full lg:mb-3">
@@ -136,10 +151,16 @@ onMounted(() => {
           </Router-Link>
         </template>
         <template #end>
-          <div
-            class="flex justify-between items-center gap-3 text-right"
-            :class="user.isLoggedIn ? 'w-36' : 'w-12'"
-          >
+          <div class="flex justify-between items-center text-right">
+            <Button
+              v-if="!user.isLoggedIn"
+              as="a"
+              label="(435) 828-3309"
+              icon="pi pi-phone"
+              class="mr-3 text-center"
+              href="tel:435-828-3309"
+              :to="{ name: 'login' }"
+            />
             <i @click="toggleColorScheme" :class="themeIcon" class="cursor-pointer"></i>
             <Button
               v-if="user.isLoggedIn"
@@ -178,12 +199,6 @@ onMounted(() => {
         <BidRequest class="lg:mr-16" />
       </div>
     </div>
-
-    <template #footer>
-      <div class="font-thin text-7xl w-full text-white text-center mt-36 lg:mt-0 xl:mt-36">
-        <i class="pi pi-sort-down-fill" style="font-size: 2rem" />
-      </div>
-    </template>
   </Panel>
 </template>
 
