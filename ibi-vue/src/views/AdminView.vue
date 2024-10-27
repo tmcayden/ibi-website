@@ -3,6 +3,7 @@ import { useUserStore } from '../stores/userStore'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
+import ReviewList from '../components/ReviewList.vue'
 
 const user = useUserStore()
 </script>
@@ -42,6 +43,8 @@ const user = useUserStore()
       </template>
     </Card>
     <!-- Authorized View -->
-    <div v-else>You are authorized to view this page</div>
+    <div v-else class="w-full md:m-3">
+      <ReviewList />
+    </div>
   </div>
 </template>

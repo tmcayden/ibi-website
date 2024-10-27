@@ -9,6 +9,7 @@ import { updatePrimaryPalette, definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 import AnimateOnScroll from 'primevue/animateonscroll'
 import Ripple from 'primevue/ripple'
+import ConfirmationService from 'primevue/confirmationservice'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -33,7 +34,7 @@ const ibiPreset = definePreset(Aura, {
 
 app.directive('animateonscroll', AnimateOnScroll)
 app.directive('ripple', Ripple)
-
+app.use(ConfirmationService)
 app.use(PrimeVue, {
   theme: {
     preset: ibiPreset,

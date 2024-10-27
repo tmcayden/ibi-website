@@ -11,6 +11,7 @@ import Button from 'primevue/button'
 import { TransitionGroup } from 'vue'
 import BidRequest from './BidRequest.vue'
 import { useUserStore } from '../stores/userStore'
+import ConfirmDialog from 'primevue/confirmdialog'
 
 // Setup
 
@@ -35,18 +36,13 @@ const navItems = ref([
     command: () => router.push('/contact')
   }
 ])
-const adminNavItems = ref([
-  {
+if (user.isLoggedIn)
+  navItems.value.push({
     label: 'Admin',
     icon: 'pi pi-cog',
     class: 'text-xl',
     command: () => router.push('/admin')
-  }
-])
-
-if (user.isLoggedIn) {
-  navItems.value.push(...adminNavItems.value)
-}
+  })
 
 const builtWithOptions = [
   'Relationships',
@@ -80,6 +76,8 @@ const backgroundImage = computed(() => {
         return ''
       case 'contact':
         return ''
+      case 'login':
+        return '/home-5.jpg'
       case 'admin':
         return '/home-5.jpg'
       default:
@@ -131,6 +129,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <ConfirmDialog />
   <Toast />
   <Panel
     :style="{
@@ -166,7 +165,7 @@ onMounted(() => {
               v-if="user.isLoggedIn"
               label="Logout"
               icon="pi pi-sign-out"
-              class=""
+              class="ml-3"
               as="router-link"
               :to="{ name: 'home' }"
               @click="user.handleLogout"
