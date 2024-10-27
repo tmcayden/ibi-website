@@ -70,8 +70,13 @@ const backgroundImage = computed(() => {
       default:
         return ''
     }
-  })();
-  return imageUrl ? `linear-gradient(to bottom right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1)), url(${imageUrl})` : '';
+  })()
+  return imageUrl
+    ? `linear-gradient(to bottom right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1)), url(${imageUrl})`
+    : ''
+})
+const adminPage = computed(() => {
+  return route.name === 'admin' || route.name == 'login'
 })
 
 // Actions
@@ -98,7 +103,7 @@ setInterval(() => {
     const newOption = Math.round(Math.random() * (builtWithOptions.length - 1))
     if (newOption === activeOption.value) {
       showText.value = true
-      return activeOption.value = (activeOption.value + 1) % builtWithOptions.length
+      return (activeOption.value = (activeOption.value + 1) % builtWithOptions.length)
     }
     activeOption.value = newOption
     showText.value = true
@@ -108,13 +113,18 @@ setInterval(() => {
 onMounted(() => {
   activeOption.value = Math.round(Math.random() * (builtWithOptions.length - 1))
 })
-
 </script>
 
 <template>
   <Toast />
   <Panel
-    :style="{ backgroundImage: backgroundImage, backgroundSize: 'cover', backgroundPosition: 'center', border: 'none'}"
+    v-if="!adminPage"
+    :style="{
+      backgroundImage: backgroundImage,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      border: 'none'
+    }"
     class="h-screen panel-with-background"
   >
     <template #header>
@@ -126,9 +136,20 @@ onMounted(() => {
           </Router-Link>
         </template>
         <template #end>
-          <div class="flex justify-between items-center gap-3 text-right" :class="user.isLoggedIn ? 'w-36' : 'w-12'">
+          <div
+            class="flex justify-between items-center gap-3 text-right"
+            :class="user.isLoggedIn ? 'w-36' : 'w-12'"
+          >
             <i @click="toggleColorScheme" :class="themeIcon" class="cursor-pointer"></i>
-            <Button v-if="user.isLoggedIn" label="Logout" icon="pi pi-sign-out" class="" as="router-link" :to="{name: 'home'}" @click="user.handleLogout"/>
+            <Button
+              v-if="user.isLoggedIn"
+              label="Logout"
+              icon="pi pi-sign-out"
+              class=""
+              as="router-link"
+              :to="{ name: 'home' }"
+              @click="user.handleLogout"
+            />
           </div>
         </template>
       </Menubar>
@@ -136,14 +157,20 @@ onMounted(() => {
 
     <div v-if="route.name == 'home'" class="mb-6">
       <div class="flex lg:flex-row lg:mt-14 flex-col justify-between items-center">
-        <div class="font-bold text-4xl lg:text-6xl text-center lg:w-1/3 text-white" style="position: relative">
-          <transition-group name='fade'>
-            <div class="animate-duration-2000 w-full text-center" :key="activeOption" v-animateonscroll="{ enterClass: 'animate-flipleft' }" style="position: absolute">
+        <div
+          class="font-bold text-4xl lg:text-6xl text-center lg:w-1/3 text-white"
+          style="position: relative"
+        >
+          <transition-group name="fade">
+            <div
+              class="animate-duration-2000 w-full text-center"
+              :key="activeOption"
+              v-animateonscroll="{ enterClass: 'animate-flipleft' }"
+              style="position: absolute"
+            >
               {{ builtWithOptions[activeOption] }}
             </div>
-            <p key="builtwith" class="lg:mt-20 mt-10">
-            Built With Integrity
-            </p>
+            <p key="builtwith" class="lg:mt-20 mt-10">Built With Integrity</p>
           </transition-group>
         </div>
       </div>
@@ -166,7 +193,8 @@ onMounted(() => {
   overflow: hidden;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.8s ease;
 }
 .fade-leave-to {

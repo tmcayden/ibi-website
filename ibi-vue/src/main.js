@@ -8,6 +8,7 @@ import { createPinia } from 'pinia'
 import { updatePrimaryPalette, definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 import AnimateOnScroll from 'primevue/animateonscroll'
+import Ripple from 'primevue/ripple'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -31,7 +32,7 @@ const ibiPreset = definePreset(Aura, {
 })
 
 app.directive('animateonscroll', AnimateOnScroll)
-
+app.directive('ripple', Ripple)
 
 app.use(PrimeVue, {
   theme: {
@@ -50,14 +51,15 @@ app.use(PrimeVue, {
       tooltip: 1200,
       toast: 1200
     }
-  }
+  },
+  ripple: true
 })
 app.use(pinia)
 app.use(router)
 app.use(ToastService)
 
 updatePrimaryPalette({
-  'primary': '#385986',
+  primary: '#385986',
   'primary-hover': '#1a3d5d', // Optional: Hover color
   'primary-active': '#1a3d5d' // Optional: Active color
 })

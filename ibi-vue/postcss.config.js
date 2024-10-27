@@ -3,7 +3,7 @@ export default {
   // Your PostCSS configuration
   plugins: {
     autoprefixer: {},
-    tailwindcss: {},
+    tailwindcss: {}
     // Add other PostCSS plugins here
   }
 }

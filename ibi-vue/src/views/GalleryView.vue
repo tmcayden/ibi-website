@@ -1,6 +1,3 @@
-<script setup>
-</script>
+<script setup></script>
 
-<template>
-    Gallery View
-</template>
+<template>Gallery View</template>
