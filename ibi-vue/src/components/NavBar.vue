@@ -34,16 +34,15 @@ const navItems = ref([
     icon: 'pi pi-envelope',
     class: 'text-xl',
     command: () => router.push('/contact')
-  }
-])
-if (user.isLoggedIn)
-  navItems.value.push({
+  },
+  {
     label: 'Admin',
     icon: 'pi pi-cog',
     class: 'text-xl',
-    command: () => router.push('/admin')
-  })
-
+    command: () => router.push('/admin'),
+    visible: () => user.isLoggedIn
+  }
+])
 const builtWithOptions = [
   'Relationships',
   'Projects',
@@ -142,7 +141,7 @@ onMounted(() => {
     :class="adminPage ? '' : 'h-screen'"
   >
     <template #header>
-      <Menubar :model="navItems" class="w-full lg:mb-3">
+      <Menubar :model="navItems" class="w-full lg:mb-3" >
         <template #start>
           <Router-Link :to="{ name: 'home' }" class="mr-3">
             <Image v-if="isDarkMode" src="/Logo_transparent_dark.png" alt="IBI Logo" width="75" />
@@ -156,11 +155,11 @@ onMounted(() => {
               as="a"
               label="(435) 828-3309"
               icon="pi pi-phone"
-              class="mr-3 text-center"
+              class="md:mr-3 text-center text-xs sm:text-base p-2"
               href="tel:435-828-3309"
               :to="{ name: 'login' }"
             />
-            <i @click="toggleColorScheme" :class="themeIcon" class="cursor-pointer"></i>
+            <i v-if="false" @click="toggleColorScheme" :class="themeIcon" class="cursor-pointer"></i>
             <Button
               v-if="user.isLoggedIn"
               label="Logout"

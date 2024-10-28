@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useUserStore } from '../stores/userStore'
 import { useToast } from 'primevue/usetoast'
 import DataTable from 'primevue/datatable'
@@ -10,39 +10,56 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import { useConfirm } from 'primevue/useconfirm'
 import SemInputText from './SemInputText.vue'
+import SemInputNumber from './SemInputNumber.vue'
+import SemTextArea from './SemTextArea.vue'
+import SemCheckBox from './SemCheckBox.vue'
+import * as yup from 'yup'
+import { useForm } from 'vee-validate'
 
 const confirm = useConfirm()
 const reviews = ref([])
-const review = ref({})
+const review = ref({
+    customer_name: null,
+    rating: null,
+    source: null,
+    review: null,
+    is_active: false
+})
 const isLoading = ref(false)
 const toast = useToast()
 const user = useUserStore()
-const isNew = ref(false)
-
 const showReviewModal = ref(false)
+
+const validationSchema = yup.object({
+    customer_name: yup.string().required('Name is required'),
+    rating: yup.number().required('Rating is required').max(5),
+    source: yup.string(),
+    review: yup.string().required('Review is required'),
+    is_active: yup.boolean()
+})
 
 const columns = [
   { field: 'customer_name', header: 'Customer' },
   { field: 'rating', header: 'Rating' },
   { field: 'source', header: 'Source' },
-  { field: 'review', header: 'Review' }
+  { field: 'review', header: 'Review' },
+  { field: 'is_active', header: 'Active', type: "bool" },
+  { field: 'created_at', header: 'Date Created', type: 'date' }
 ]
+
+const isNew = computed(() => !review.value.id)
 
 function manageReview(data = {}) {
   review.value = data
-  isNew.value = data == {}
   showReviewModal.value = true
 }
 
 async function addReview() {
   if (review.value == {}) return
-  const { error, data } = await supabase
+  const { error } = await supabase
     .from('customer_reviews')
     .insert([
-      { customer_name: review.customer_name },
-      { rating: review.rating },
-      { source: review.source },
-      { review: review.review }
+        review.value
     ])
     .select()
   if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
@@ -126,6 +143,18 @@ async function refresh() {
   isLoading.value = false
 }
 
+const { handleSubmit } = useForm({
+  validationSchema
+})
+
+const onSave = handleSubmit(() => {
+  addReview()
+})
+
+const onUpdate = handleSubmit(() => {
+    updateReview()
+})
+
 onMounted(async () => {
   await refresh()
 })
@@ -139,8 +168,16 @@ onMounted(async () => {
         <i class="pi pi-plus"></i>
       </Button>
     </template>
-    <DataTable :value="reviews">
-      <Column v-for="col of columns" :key="col.field" :header="col.header" :field="col.field" />
+    <DataTable :value="reviews" sortField="is_active" :sortOrder="-1" >
+      <Column v-for="col of columns" :key="col.field" :header="col.header" :field="col.field" sortable >
+      <template #body="slotProps">
+        <div v-if="col.type == 'bool'" class="flex justify-center">
+          <i v-if="slotProps.data[col.field]" class="pi pi-check"></i>
+        </div>
+        <div v-else-if="col.type == 'date'">{{ new Date(slotProps.data[col.field]).toLocaleDateString() }}</div>
+        <div v-else>{{ slotProps.data[col.field] }}</div>
+      </template>
+      </Column>
       <Column header="Actions">
         <template #body="slotProps">
           <div class="w-36 flex justify-between">
@@ -151,15 +188,16 @@ onMounted(async () => {
       </Column>
     </DataTable>
   </Panel>
-  <Dialog v-model:visible="showReviewModal">
+  <Dialog v-model:visible="showReviewModal" class="w-full m-2 lg:w-1/3">
     <template #header
       ><p class="font-medium w-full text-center text-xl">Add a new review</p></template
     >
-    <div class="flex flex-wrap gap-3 justify-between mt-3">
-      <SemInputText v-model="review.customer_name" id="name" label="Name" class="" />
-      <SemInputText v-model="review.rating" id="rating" label="Rating" class="" />
-      <SemInputText v-model="review.source" id="source" label="Source" class="" />
-      <SemInputText v-model="review.review" id="review" label="Review" class="w-full" />
+    <div class="flex flex-wrap gap-8 justify-between mt-3">
+      <SemInputText v-model="review.customer_name" id="customer_name" label="Name" />
+      <SemInputNumber v-model="review.rating" id="rating" label="Rating" />
+      <SemInputText v-model="review.source" id="source" label="Source" />
+      <SemCheckBox v-model="review.is_active" id="is_active" label="Active?" />
+      <SemTextArea v-model="review.review" id="review" label="Review" class="w-full" />
     </div>
     <template #footer>
       <Button
@@ -168,8 +206,8 @@ onMounted(async () => {
         severity="secondary"
         @click="showReviewModal = false"
       />
-      <Button v-if="isNew" label="Save" severity="success" icon="pi pi-save" @click="addReview" />
-      <Button v-else label="Update" severity="success" icon="pi pi-save" @click="updateReview" />
+      <Button v-if="isNew" label="Save" severity="success" icon="pi pi-save" @click="onSave" />
+      <Button v-else label="Update" severity="success" icon="pi pi-save" @click="onUpdate" />
     </template>
   </Dialog>
 </template>

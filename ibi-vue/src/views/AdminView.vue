@@ -3,7 +3,7 @@ import { useUserStore } from '../stores/userStore'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import ReviewList from '../components/ReviewList.vue'
+import ReviewList from '../components/ReviewManager.vue'
 
 const user = useUserStore()
 </script>
@@ -11,7 +11,7 @@ const user = useUserStore()
 <template>
   <div class="w-full flex justify-center">
     <!-- Unauthorized View -->
-    <Card v-if="!user.session" class="mt-3 w-1/3">
+    <Card v-if="!user.session" class="mt-3 lg:w-1/3">
       <template #header>
         <p class="text-center font-medium w-full p-4 pb-0">
           You are not authorized to view this page

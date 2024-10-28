@@ -28,7 +28,7 @@ const doLogin = async () => {
 
 <template>
   <div class="w-full flex justify-center">
-    <Card class="mt-3 w-1/3">
+    <Card class="mt-3 md:w-1/3">
       <template #header>
         <p class="text-center font-medium w-full p-4 pb-0">
           Enter your email to receive a one-time login link
@@ -37,7 +37,7 @@ const doLogin = async () => {
       </template>
       <template #content>
         <div class="flex items-center gap-8 flex-col">
-          <SemInputText id="email" label="Email" v-model="email" class="w-80" />
+          <SemInputText id="email" label="Email" v-model="email" class="w-full xl:w-80" />
           <Button
             :disabled="!email || isLoading"
             label="Request Link"

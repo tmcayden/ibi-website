@@ -3,7 +3,7 @@ import Carousel from 'primevue/carousel'
 import { computed, ref, watch } from 'vue'
 import Image from 'primevue/image'
 import { useScreenSizeStore } from '../stores/screenSizeStore'
-import Review from '../components/ReviewBar.vue'
+import Review from '../components/Reviews.vue'
 
 const screenSize = useScreenSizeStore()
 const homeImages = ref([
