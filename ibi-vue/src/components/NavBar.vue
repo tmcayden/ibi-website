@@ -141,7 +141,7 @@ onMounted(() => {
     :class="adminPage ? '' : 'h-screen'"
   >
     <template #header>
-      <Menubar :model="navItems" class="w-full lg:mb-3" >
+      <Menubar :model="navItems" class="w-full lg:mb-3">
         <template #start>
           <Router-Link :to="{ name: 'home' }" class="mr-3">
             <Image v-if="isDarkMode" src="/Logo_transparent_dark.png" alt="IBI Logo" width="75" />
@@ -159,7 +159,12 @@ onMounted(() => {
               href="tel:435-828-3309"
               :to="{ name: 'login' }"
             />
-            <i v-if="false" @click="toggleColorScheme" :class="themeIcon" class="cursor-pointer"></i>
+            <i
+              v-if="false"
+              @click="toggleColorScheme"
+              :class="themeIcon"
+              class="cursor-pointer"
+            ></i>
             <Button
               v-if="user.isLoggedIn"
               label="Logout"

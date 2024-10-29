@@ -15,84 +15,86 @@ import SemTextArea from './SemTextArea.vue'
 import SemCheckBox from './SemCheckBox.vue'
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
+import SemDatePicker from './SempurnaComponents/SemDatePicker.vue'
 
 const confirm = useConfirm()
-const reviews = ref([])
-const review = ref({
-  customer_name: null,
-  rating: null,
-  source: null,
-  review: null,
-  is_active: false
+const projects = ref([])
+const project = ref({
+  project_name: null,
+  category: null,
+  description: null,
+  is_active: false,
+  start_date: null,
+  end_date: null,
+  created_date: null
 })
 const isLoading = ref(false)
 const toast = useToast()
 const user = useUserStore()
-const showReviewModal = ref(false)
+const showProjectModal = ref(false)
 
-const validationSchema = yup.object({
-  customer_name: yup.string().required('Name is required'),
-  rating: yup.number().required('Rating is required').max(5),
-  source: yup.string(),
-  review: yup.string().required('Review is required'),
-  is_active: yup.boolean()
-})
+const validationSchema = yup.object({})
 
 const columns = [
-  { field: 'customer_name', header: 'Customer' },
-  { field: 'rating', header: 'Rating' },
-  { field: 'source', header: 'Source' },
-  { field: 'review', header: 'Review' },
+  { field: 'project_name', header: 'Project', type: 'link' },
+  { field: 'category', header: 'Category' },
+  { field: 'description', header: 'Description' },
   { field: 'is_active', header: 'Active', type: 'bool' },
-  { field: 'created_at', header: 'Date Created', type: 'date' }
+  { field: 'start_date', header: 'Start Date', type: 'date' },
+  { field: 'end_date', header: 'End Date', type: 'date' },
+  { field: 'created_date', header: 'Date Created', type: 'date' }
 ]
 
-const isNew = computed(() => !review.value.id)
-const reviewModalTitle = computed(() => (isNew.value ? 'Add a new review' : 'Edit review'))
+const isNew = computed(() => !project.value.id)
 
-function manageReview(data = {}) {
-  review.value = data
-  showReviewModal.value = true
+function manageProject(data = {}) {
+  project.value = data
+  showProjectModal.value = true
 }
 
-async function addReview() {
-  if (review.value == {}) return
-  const { error } = await supabase.from('customer_reviews').insert([review.value]).select()
+async function refresh() {
+  isLoading.value = true
+  const { data = [], error } = await supabase.from('projects').select('*')
+  if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 2000 })
+  else projects.value = data
+  isLoading.value = false
+}
+
+async function addProject() {
+  if (project.value == {}) return
+  const { error } = await supabase.from('projects').insert([project.value]).select()
   if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 2000 })
   else {
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Review added successfully',
+      detail: 'Project added successfully',
       life: 2000
     })
-    showReviewModal.value = false
+    showProjectModal.value = false
     await refresh()
   }
 }
 
-async function updateReview() {
-  const { error } = await supabase
-    .from('customer_reviews')
-    .update(review.value)
-    .eq('id', review.value.id)
+async function updateProject() {
+  const { error } = await supabase.from('projects').update(project.value).eq('id', project.value.id)
 
   if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 2000 })
   else {
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Review updated successfully',
+      detail: 'Project updated successfully',
       life: 2000
     })
-    showReviewModal.value = false
+    showProjectModal.value = false
     await refresh()
   }
 }
 
 function confirmDelete(id) {
   confirm.require({
-    message: 'Are you sure you want to Delete this review?',
+    message: 'Are you sure you want to Delete this project?',
     header: 'Please Confirm',
     rejectProps: {
       label: 'Cancel',
@@ -104,7 +106,7 @@ function confirmDelete(id) {
       severity: 'danger'
     },
     accept: () => {
-      deleteReview(id)
+      deleteProject(id)
     },
     reject: () => {
       return false
@@ -112,31 +114,19 @@ function confirmDelete(id) {
   })
 }
 
-async function deleteReview(id) {
+async function deleteProject(id) {
   if (!id) return
-  const { error } = await supabase.from('customer_reviews').delete().eq('id', id)
+  const { error } = await supabase.from('projects').delete().eq('id', id)
   if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 2000 })
   else {
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Review deleted successfully',
+      detail: 'Project deleted successfully',
       life: 2000
     })
     await refresh()
   }
-}
-
-async function refresh() {
-  if (!user.isLoggedIn) return
-  isLoading.value = true
-  const { data = [], error } = await supabase
-    .from('customer_reviews')
-    .select('*')
-    .order('created_at', { ascending: false })
-  if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message })
-  reviews.value = data
-  isLoading.value = false
 }
 
 const { handleSubmit } = useForm({
@@ -144,11 +134,11 @@ const { handleSubmit } = useForm({
 })
 
 const onSave = handleSubmit(() => {
-  addReview()
+  addProject()
 })
 
 const onUpdate = handleSubmit(() => {
-  updateReview()
+  updateProject()
 })
 
 onMounted(async () => {
@@ -158,13 +148,13 @@ onMounted(async () => {
 
 <template>
   <Panel class="w-full">
-    <template #header><p class="font-bold text-2xl">Review Manager</p></template>
+    <template #header><p class="font-bold text-2xl">Project Manager</p></template>
     <template #icons>
-      <Button severity="success" icon="pi pi-p" @click="manageReview()">
+      <Button severity="success" icon="pi pi-p" @click="manageProject()">
         <i class="pi pi-plus"></i>
       </Button>
     </template>
-    <DataTable :value="reviews" sortField="is_active" :sortOrder="-1">
+    <DataTable :value="projects" sortField="is_active" :sortOrder="-1">
       <Column
         v-for="col of columns"
         :key="col.field"
@@ -189,30 +179,36 @@ onMounted(async () => {
       <Column header="Actions">
         <template #body="slotProps">
           <div class="w-36 flex justify-between">
-            <Button label="Edit" @click="manageReview(slotProps.data)" />
+            <Button label="Edit" @click="manageProject(slotProps.data)" />
             <Button label="Delete" severity="danger" @click="confirmDelete(slotProps.data.id)" />
           </div>
         </template>
       </Column>
     </DataTable>
   </Panel>
-  <Dialog v-model:visible="showReviewModal" class="w-full m-2 lg:w-1/3">
+  <Dialog v-model:visible="showProjectModal" class="w-full m-2 lg:w-1/3">
     <template #header
-      ><p class="font-medium w-full text-center text-xl">{{ reviewModalTitle }}</p></template
+      ><p class="font-medium w-full text-center text-xl">Add a New Project</p></template
     >
     <div class="flex flex-wrap gap-8 justify-between mt-3">
-      <SemInputText v-model="review.customer_name" id="customer_name" label="Name" />
-      <SemInputNumber v-model="review.rating" id="rating" label="Rating" />
-      <SemInputText v-model="review.source" id="source" label="Source" />
-      <SemCheckBox v-model="review.is_active" id="is_active" label="Active?" />
-      <SemTextArea v-model="review.review" id="review" label="Review" class="w-full" />
+      <SemInputText v-model="project.project_name" id="project_name" label="Project Name" />
+      <SemInputText v-model="project.category" id="category" label="Category" />
+      <SemDatePicker v-model="project.start_date" id="start_date" label="Start Date" />
+      <SemDatePicker v-model="project.end_date" id="end_date" label="End Date" />
+      <SemTextArea
+        v-model="project.description"
+        id="description"
+        label="Description"
+        class="w-full"
+      />
+      <SemCheckBox v-model="project.is_active" id="is_active" label="Active?" />
     </div>
     <template #footer>
       <Button
         label="Cancel"
         icon="pi pi-times"
         severity="secondary"
-        @click="showReviewModal = false"
+        @click="showProjectModal = false"
       />
       <Button v-if="isNew" label="Save" severity="success" icon="pi pi-save" @click="onSave" />
       <Button v-else label="Update" severity="success" icon="pi pi-save" @click="onUpdate" />

@@ -3,7 +3,8 @@ import { useUserStore } from '../stores/userStore'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import ReviewList from '../components/ReviewManager.vue'
+import ReviewManager from '../components/ReviewManager.vue'
+import ProjectManager from '../components/ProjectManager.vue'
 
 const user = useUserStore()
 </script>
@@ -43,8 +44,9 @@ const user = useUserStore()
       </template>
     </Card>
     <!-- Authorized View -->
-    <div v-else class="w-full md:m-3">
-      <ReviewList />
+    <div v-else class="w-full md:m-3 flex flex-col gap-5">
+      <ProjectManager />
+      <ReviewManager />
     </div>
   </div>
 </template>
