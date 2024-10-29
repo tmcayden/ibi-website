@@ -28,7 +28,7 @@ const isInvalid = computed(() => errorMessage.value !== undefined && errorMessag
 
 <template>
   <div class="flex flex-col gap-2">
-    <FloatLabel>
+    <FloatLabel variant="on">
       <DatePicker
         :id="props.id"
         v-model="value"

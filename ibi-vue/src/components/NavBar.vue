@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useLocalStorage } from '../util/storage'
 import { ref } from 'vue'
@@ -8,16 +8,18 @@ import Image from 'primevue/image'
 import Panel from 'primevue/panel'
 import Toast from 'primevue/toast'
 import Button from 'primevue/button'
-import { TransitionGroup } from 'vue'
 import BidRequest from './BidRequest.vue'
 import { useUserStore } from '../stores/userStore'
 import ConfirmDialog from 'primevue/confirmdialog'
+import { useProjectStore } from '../stores/projectStore'
+import { getFileUrl } from '../util/supabase/downloadFile'
 
 // Setup
 
 const router = useRouter()
 const route = useRoute()
 const user = useUserStore()
+const project = useProjectStore()
 const isDarkMode = useLocalStorage(false, 'isDarkMode')
 
 // State
@@ -61,32 +63,44 @@ const builtWithOptions = [
 ]
 const activeOption = ref(0)
 const showText = ref(true)
+const backgroundImage = ref('')
 
 // Computed
 const themeIcon = computed(() => {
   return isDarkMode.value ? 'pi pi-moon' : 'pi pi-sun'
 })
-const backgroundImage = computed(() => {
-  const imageUrl = (() => {
-    switch (route.name) {
-      case 'home':
-        return '/FramingPhoto.jpg'
-      case 'gallery':
-        return ''
-      case 'contact':
-        return ''
-      case 'login':
-        return '/home-5.jpg'
-      case 'admin':
-        return '/home-5.jpg'
-      default:
-        return ''
-    }
-  })()
-  return imageUrl
+async function updateBackgroundImage() {
+  let imageUrl = ''
+
+  switch (route.name) {
+    case 'home':
+      imageUrl = '/FramingPhoto.jpg'
+      break
+    case 'gallery':
+      imageUrl = ''
+      break
+    case 'contact':
+      imageUrl = ''
+      break
+    case 'login':
+      imageUrl = '/home-5.jpg'
+      break
+    case 'admin':
+      imageUrl = '/home-5.jpg'
+      break
+    case 'project':
+      const projectId = route.params.id
+      await project.loadProject(projectId)
+      imageUrl = await getFileUrl('projects', project.project.image_path)
+      break
+    default:
+      imageUrl = ''
+  }
+
+  backgroundImage.value = imageUrl
     ? `linear-gradient(to bottom right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1)), url(${imageUrl})`
     : ''
-})
+}
 const adminPage = computed(() => {
   return route.name === 'admin' || route.name == 'login'
 })
@@ -124,7 +138,10 @@ setInterval(() => {
 
 onMounted(() => {
   activeOption.value = Math.round(Math.random() * (builtWithOptions.length - 1))
+  updateBackgroundImage()
 })
+
+watch(() => route.name, updateBackgroundImage)
 </script>
 
 <template>

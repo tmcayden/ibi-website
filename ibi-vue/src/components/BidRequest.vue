@@ -7,7 +7,7 @@ import { ref, computed } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { useForm, Field } from 'vee-validate'
 import * as yup from 'yup'
-import SemInputText from './SemInputText.vue'
+import SemInputText from './SempurnaComponents/SemInputText.vue'
 import Message from 'primevue/message'
 
 // Setup

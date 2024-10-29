@@ -9,13 +9,13 @@ import { supabase } from '../supabase'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import { useConfirm } from 'primevue/useconfirm'
-import SemInputText from './SemInputText.vue'
-import SemInputNumber from './SemInputNumber.vue'
-import SemTextArea from './SemTextArea.vue'
-import SemCheckBox from './SemCheckBox.vue'
+import SemInputText from './SempurnaComponents/SemInputText.vue'
+import SemTextArea from './SempurnaComponents/SemTextArea.vue'
+import SemCheckBox from './SempurnaComponents/SemCheckBox.vue'
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
 import SemDatePicker from './SempurnaComponents/SemDatePicker.vue'
+import SemFileUpload from './SempurnaComponents/SemFileUpload.vue'
 
 const confirm = useConfirm()
 const projects = ref([])
@@ -26,26 +26,35 @@ const project = ref({
   is_active: false,
   start_date: null,
   end_date: null,
-  created_date: null
+  created_date: null,
+  image_path: null
 })
 const isLoading = ref(false)
 const toast = useToast()
-const user = useUserStore()
 const showProjectModal = ref(false)
 
-const validationSchema = yup.object({})
+const validationSchema = yup.object({
+  project_name: yup.string().required('Project Name is required'),
+  category: yup.string().required('Category is required'),
+  description: yup.string().required('Description is required'),
+  is_active: yup.boolean()
+})
 
 const columns = [
-  { field: 'project_name', header: 'Project', type: 'link' },
+  { field: 'project_name', header: 'Project', type: 'detail' },
   { field: 'category', header: 'Category' },
   { field: 'description', header: 'Description' },
   { field: 'is_active', header: 'Active', type: 'bool' },
   { field: 'start_date', header: 'Start Date', type: 'date' },
   { field: 'end_date', header: 'End Date', type: 'date' },
+  { field: 'image_path', header: 'Image', type: 'image' },
   { field: 'created_date', header: 'Date Created', type: 'date' }
 ]
 
 const isNew = computed(() => !project.value.id)
+const disableFileUpload = computed(
+  () => project.value.category == null || project.value.category == ''
+)
 
 function manageProject(data = {}) {
   project.value = data
@@ -173,6 +182,14 @@ onMounted(async () => {
                 : ''
             }}
           </div>
+          <div v-else-if="col.type == 'detail'">
+            <Button
+              :label="slotProps.data[col.field]"
+              as="router-link"
+              link
+              :to="{ name: 'project', params: { id: slotProps.data.id } }"
+            />
+          </div>
           <div v-else>{{ slotProps.data[col.field] }}</div>
         </template>
       </Column>
@@ -200,6 +217,13 @@ onMounted(async () => {
         id="description"
         label="Description"
         class="w-full"
+      />
+      <SemFileUpload
+        :readonly="disableFileUpload"
+        v-model:category="project.category"
+        v-model:path="project.image_path"
+        id="image_path"
+        label="Image"
       />
       <SemCheckBox v-model="project.is_active" id="is_active" label="Active?" />
     </div>

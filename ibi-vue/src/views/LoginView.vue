@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useUserStore } from '../stores/userStore'
 import Card from 'primevue/card'
-import SemInputText from '../components/SemInputText.vue'
+import SemInputText from '../components/SempurnaComponents/SemInputText.vue'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'

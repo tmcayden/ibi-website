@@ -32,6 +32,13 @@ const routes = [
     name: 'login',
     meta: { title: 'Login' },
     component: () => import('../views/LoginView.vue')
+  },
+  {
+    path: '/projects/:id(\\d+)',
+    name: 'project',
+    props: true,
+    meta: { title: 'Project Detail' },
+    component: () => import('../views/ProjectView.vue')
   }
 ]
 
