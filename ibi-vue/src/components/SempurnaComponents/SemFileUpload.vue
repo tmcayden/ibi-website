@@ -1,8 +1,9 @@
 <script setup>
-import { computed, ref, toRefs, watchEffect } from 'vue'
+import { ref, toRefs, watchEffect } from 'vue'
 import { supabase } from '../../supabase'
 import { useToast } from 'primevue/usetoast'
 import { downloadFile } from '../../util/supabase/downloadFile'
+import Button from 'primevue/button'
 
 // setup
 const toast = useToast()
@@ -18,7 +19,7 @@ const downloadImage = async () => {
   src.value = await downloadFile('projects', path.value)
 }
 
-const uploadAvatar = async (event) => {
+const uploadImage = async (event) => {
   files.value = event.target.files
   try {
     uploading.value = true
@@ -28,7 +29,7 @@ const uploadAvatar = async (event) => {
 
     const file = files.value[0]
     const fileExt = file.name.split('.').pop()
-    const filePath = `${category.value}/${Math.random()}.${fileExt}`
+    const filePath = `${category.value}/${Date.now()}.${fileExt}`
 
     const { error: uploadError } = await supabase.storage.from('projects').upload(filePath, file)
 
@@ -58,21 +59,13 @@ watchEffect(() => {
     <img v-if="src" :src="src" alt="Avatar" class="avatar image" />
     <div v-else class="avatar no-image" />
     <div>
-      <label
-        class="button primary block"
-        :class="!readonly ? 'cursor-pointer' : ''"
-        for="single"
-        v-tooltip.top="readonly ? 'A category is required before file upload' : ''"
-      >
-        <i class="pi pi-upload"></i>
-        {{ uploading ? 'Uploading ...' : path ? 'Replace Image' : 'Upload Image' }}
-      </label>
+      <Button as="label" for="single" :label="uploading ? 'Uploading ...' : path ? 'Replace Image' : 'Upload Image'" icon="pi pi-upload" v-tooltip.top="readonly ? 'A category is required before file upload' : ''" :disabled="uploading || readonly"/>
       <input
         style="visibility: hidden; position: absolute"
         type="file"
         id="single"
         accept="image/*"
-        @change="uploadAvatar"
+        @change="uploadImage"
         :disabled="uploading || readonly"
       />
     </div>

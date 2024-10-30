@@ -15,7 +15,6 @@ import { useProjectStore } from '../stores/projectStore'
 import { getFileUrl } from '../util/supabase/downloadFile'
 
 // Setup
-
 const router = useRouter()
 const route = useRoute()
 const user = useUserStore()
@@ -23,7 +22,6 @@ const project = useProjectStore()
 const isDarkMode = useLocalStorage(false, 'isDarkMode')
 
 // State
-
 const navItems = ref([
   {
     label: 'Gallery',
@@ -101,12 +99,11 @@ async function updateBackgroundImage() {
     ? `linear-gradient(to bottom right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1)), url(${imageUrl})`
     : ''
 }
-const adminPage = computed(() => {
-  return route.name === 'admin' || route.name == 'login'
+const largeBackground = computed(() => {
+  return route.name == 'home' || route.name == 'project'
 })
 
 // Actions
-
 if (isDarkMode.value) {
   const element = document.querySelector('html')
   element.classList.add('ibi-dark')
@@ -155,7 +152,14 @@ watch(() => route.name, updateBackgroundImage)
       border: 'none'
     }"
     class="panel-with-background"
-    :class="adminPage ? '' : 'h-screen'"
+    :class="largeBackground ? 'h-screen' : ''"
+    :pt="{
+      content: (options) => ({
+        class: [
+          'h-full'
+      ]
+      })
+    }"
   >
     <template #header>
       <Menubar :model="navItems" class="w-full lg:mb-3">
@@ -217,6 +221,16 @@ watch(() => route.name, updateBackgroundImage)
       </div>
       <div class="w-full mt-12 flex lg:justify-end justify-center">
         <BidRequest class="lg:mr-16" />
+      </div>
+    </div>
+    <div v-if="route.name == 'project'" class="h-full">
+      <div class="h-5/6 flex flex-col justify-end font-bold ">
+        <div class="text-white text-6xl">
+          {{ project.project.project_name }}
+        </div>
+        <div v-if="project.project.start_date && project.project.end_date" class="text-slate-300 text-base mt-3">
+          {{ new Date(project.project.start_date).toLocaleDateString() + ' - ' + new Date(project.project.end_date).toLocaleDateString() }}
+        </div>
       </div>
     </div>
   </Panel>

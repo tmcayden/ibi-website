@@ -39,4 +39,8 @@ body {
   background: #385986 center center no-repeat fixed;
   background-size: cover;
 }
+
+.p-panel-content-container {
+  height: 100%;
+}
 </style>
