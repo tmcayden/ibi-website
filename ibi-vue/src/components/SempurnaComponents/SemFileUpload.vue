@@ -59,7 +59,14 @@ watchEffect(() => {
     <img v-if="src" :src="src" alt="Avatar" class="avatar image" />
     <div v-else class="avatar no-image" />
     <div>
-      <Button as="label" for="single" :label="uploading ? 'Uploading ...' : path ? 'Replace Image' : 'Upload Image'" icon="pi pi-upload" v-tooltip.top="readonly ? 'A category is required before file upload' : ''" :disabled="uploading || readonly"/>
+      <Button
+        as="label"
+        for="single"
+        :label="uploading ? 'Uploading ...' : path ? 'Replace Image' : 'Upload Image'"
+        icon="pi pi-upload"
+        v-tooltip.top="readonly ? 'A category is required before file upload' : ''"
+        :disabled="uploading || readonly"
+      />
       <input
         style="visibility: hidden; position: absolute"
         type="file"

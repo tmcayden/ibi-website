@@ -155,9 +155,7 @@ watch(() => route.name, updateBackgroundImage)
     :class="largeBackground ? 'h-screen' : ''"
     :pt="{
       content: (options) => ({
-        class: [
-          'h-full'
-      ]
+        class: ['h-full']
       })
     }"
   >
@@ -203,8 +201,8 @@ watch(() => route.name, updateBackgroundImage)
     <div v-if="route.name == 'home'" class="mb-6">
       <div class="flex lg:flex-row lg:mt-14 flex-col justify-between items-center">
         <div
-          class="font-bold text-4xl lg:text-6xl text-center lg:w-1/3 text-white"
-          style="position: relative"
+          class="font-bold text-4xl lg:text-6xl text-center lg:w-1/3 text-white tracking-wide"
+          :style="{ 'text-shadow': '1px 1px 2px rgba(0, 0, 0, 0.5)', position: 'relative' }"
         >
           <transition-group name="fade">
             <div
@@ -222,14 +220,28 @@ watch(() => route.name, updateBackgroundImage)
       <div class="w-full mt-12 flex lg:justify-end justify-center">
         <BidRequest class="lg:mr-16" />
       </div>
+      <div
+        class="w-1/2 text-white font-semibold text-2xl mt-12 flex lg:justify-start justify-center tracking-widest"
+        style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5)"
+      >
+        Exceptional craftsmanship, reliability, and a commitment to delivering your vision with
+        honesty and quality at every step.
+      </div>
     </div>
     <div v-if="route.name == 'project'" class="h-full">
-      <div class="h-5/6 flex flex-col justify-end font-bold ">
+      <div class="h-5/6 flex flex-col justify-end font-bold">
         <div class="text-white text-6xl">
           {{ project.project.project_name }}
         </div>
-        <div v-if="project.project.start_date && project.project.end_date" class="text-slate-300 text-base mt-3">
-          {{ new Date(project.project.start_date).toLocaleDateString() + ' - ' + new Date(project.project.end_date).toLocaleDateString() }}
+        <div
+          v-if="project.project.start_date && project.project.end_date"
+          class="text-slate-300 text-base mt-3"
+        >
+          {{
+            new Date(project.project.start_date).toLocaleDateString() +
+            ' - ' +
+            new Date(project.project.end_date).toLocaleDateString()
+          }}
         </div>
       </div>
     </div>

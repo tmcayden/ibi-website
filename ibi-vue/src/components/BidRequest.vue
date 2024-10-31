@@ -72,7 +72,7 @@ const onSubmit = handleSubmit((values) => {
     v-animateonscroll="{ enterClass: 'animate-fadeinright' }"
   >
     <template #header>
-      <p class="text-xl text-center font-medium w-full">
+      <p class="text-xl text-center font-medium w-full tracking-wider">
         Request a <span class="font-extrabold">FREE</span> Bid!
       </p>
     </template>

@@ -4,6 +4,7 @@ import { computed, ref, watch } from 'vue'
 import Image from 'primevue/image'
 import { useScreenSizeStore } from '../stores/screenSizeStore'
 import Review from '../components/Reviews.vue'
+import Projects from '../components/Projects.vue'
 
 const screenSize = useScreenSizeStore()
 const homeImages = ref([
@@ -45,16 +46,6 @@ watch(numVisible, () => {
 <template>
   <div class="w-full flex flex-col justify-center">
     <Review />
-    <Carousel
-      :value="homeImages"
-      circular
-      :autoplayInterval="autoPlayInterval"
-      :numVisible="numVisible"
-      :key="carouselKey"
-    >
-      <template #item="slotProps">
-        <Image :src="slotProps.data.src" :alt="slotProps.data.label" preview />
-      </template>
-    </Carousel>
+    <Projects />
   </div>
 </template>

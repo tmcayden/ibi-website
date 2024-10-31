@@ -2,13 +2,11 @@
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Divider from 'primevue/divider'
-import { useToast } from 'primevue/usetoast'
 import { onMounted, ref } from 'vue'
 import { useUserStore } from '../stores/userStore'
 import { supabase } from '../supabase'
 import ProgressSpinner from 'primevue/progressspinner'
 
-const toast = useToast()
 const user = useUserStore()
 
 const isLoading = ref(false)
@@ -16,7 +14,7 @@ const reviews = ref([])
 
 async function refresh() {
   isLoading.value = true
-  const { data = [], error } = await supabase
+  const { data = [] } = await supabase
     .from('customer_reviews')
     .select('*')
     .order('created_at', { ascending: false })
@@ -42,7 +40,7 @@ onMounted(async () => await refresh())
   <div v-if="reviews.length > 0 && !isLoading" class="flex flex-wrap justify-around bg-white p-5">
     <Card v-for="review in reviews" class="w-96 m-3 bg-zinc-800">
       <template #content>
-        <div class="flex items-center text-slate-300">
+        <div class="flex items-center text-slate-300 tracking-widest">
           <p>{{ review.review }}</p>
         </div>
       </template>
