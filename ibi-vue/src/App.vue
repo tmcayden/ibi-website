@@ -6,6 +6,7 @@ import { onMounted, onUnmounted } from 'vue'
 import { useScreenSizeStore } from './stores/screenSizeStore'
 import { supabase } from './supabase'
 import { useUserStore } from './stores/userStore'
+import Footer from './components/Footer.vue'
 
 const screenSize = useScreenSizeStore()
 const user = useUserStore()
@@ -31,6 +32,7 @@ onUnmounted(() => {
     <Toast />
     <NavBar />
     <RouterView />
+    <Footer />
   </div>
 </template>
 
