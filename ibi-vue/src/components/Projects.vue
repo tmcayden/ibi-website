@@ -38,8 +38,9 @@ onMounted(async () => await refresh())
 
 <template>
   <div
-    class="w-full text-black text-4xl font-bold text-center pt-4 tracking-wider"
+    class="w-full text-black text-4xl font-bold text-center py-8 tracking-wider"
     v-if="projects.length > 0 && !isLoading"
+    style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);"
   >
     Check Out Our Past Projects
   </div>

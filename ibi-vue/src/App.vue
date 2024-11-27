@@ -28,10 +28,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <Toast />
     <NavBar />
-    <RouterView />
+    <main class="flex-grow">
+      <RouterView />
+    </main>
     <Footer />
   </div>
 </template>
