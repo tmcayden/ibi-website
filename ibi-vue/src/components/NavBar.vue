@@ -75,16 +75,16 @@ async function updateBackgroundImage() {
       imageUrl = '/FramingPhoto.jpg'
       break
     case 'gallery':
-      imageUrl = ''
+      imageUrl = '/home-5.jpg'
       break
     case 'contact':
-      imageUrl = ''
+      imageUrl = '/home-7.jpg'
       break
     case 'login':
-      imageUrl = '/home-5.jpg'
+      imageUrl = '/blue-bubble-bg.png'
       break
     case 'admin':
-      imageUrl = '/home-5.jpg'
+      imageUrl = '/blue-bubble-bg.png'
       break
     case 'project':
       const projectId = route.params.id

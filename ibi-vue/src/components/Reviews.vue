@@ -76,11 +76,12 @@ onMounted(async () => await refresh())
     </Card>
   </div>
   <ProgressSpinner v-else />
-  <div v-if="user.isLoggedIn" class="w-full text-center bg-white p-2">
+  <div v-if="user.isLoggedIn" class="w-full text-center p-2">
     <Button
       label="Manage Reviews"
       as="router-link"
       icon="pi pi-pen-to-square"
+      severity="secondary"
       class="w-48"
       :to="{ name: 'admin' }"
     />
