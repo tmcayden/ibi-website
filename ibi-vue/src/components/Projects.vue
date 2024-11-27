@@ -38,7 +38,7 @@ onMounted(async () => await refresh())
 
 <template>
   <div
-    class="w-full text-white text-4xl font-bold text-center pt-4 tracking-wider"
+    class="w-full text-black text-4xl font-bold text-center pt-4 tracking-wider"
     v-if="projects.length > 0 && !isLoading"
   >
     Check Out Our Past Projects

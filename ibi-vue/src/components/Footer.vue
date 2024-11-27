@@ -4,8 +4,9 @@
       <img :src="'/Logo_transparent_dark.png'" alt="IBI Contracting Logo" class="logo" />
       <div class="company-info">
         <h3>IBI Contracting</h3>
-        <p class="contact-info">Phone: (123) 456-7890</p>
-        <p class="contact-info">Email: info@ibicontracting.net</p>
+        <a href="tel:435-828-3309" class="contact-info block">Terran Harvey | (435) 828-3309</a>
+        <a href="tel:435-219-6300" class="contact-info block">Mitch Larsen | (435) 219-6300</a>
+        <a href="mailto:contracting.IBI@gmail.com?subject='Request%20From%20Website'" class="contact-info">contracting.IBI@gmail.com</a>
       </div>
       <div class="social-media">
         <a href="https://www.facebook.com" target="_blank" class="social-icon">
@@ -18,10 +19,6 @@
     </div>
   </footer>
 </template>
-
-<script setup>
-const logoSrc = 'path/to/your/logo.png' // Replace with the actual path to your logo image
-</script>
 
 <style scoped>
 .footer {

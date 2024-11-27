@@ -220,13 +220,6 @@ watch(() => route.name, updateBackgroundImage)
       <div class="w-full mt-12 flex lg:justify-end justify-center">
         <BidRequest class="lg:mr-16" />
       </div>
-      <div
-        class="w-1/2 text-white font-semibold text-2xl mt-12 flex lg:justify-start justify-center tracking-widest"
-        style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5)"
-      >
-        Exceptional craftsmanship, reliability, and a commitment to delivering your vision with
-        honesty and quality at every step.
-      </div>
     </div>
     <div v-if="route.name == 'project'" class="h-full">
       <div class="h-5/6 flex flex-col justify-end font-bold">

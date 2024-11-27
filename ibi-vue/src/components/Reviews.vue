@@ -37,7 +37,7 @@ onMounted(async () => await refresh())
 </script>
 
 <template>
-  <div v-if="reviews.length > 0 && !isLoading" class="flex flex-wrap justify-around bg-white p-5">
+  <div v-if="reviews.length > 0 && !isLoading" class="flex flex-wrap justify-around">
     <Card v-for="review in reviews" class="w-96 m-3 bg-zinc-800">
       <template #content>
         <div class="flex items-center text-slate-300 tracking-widest">

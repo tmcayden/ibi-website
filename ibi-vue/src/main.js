@@ -63,13 +63,8 @@ app.use(ToastService)
 
 updatePrimaryPalette({
   primary: '#385986',
-  'primary-hover': '#1a3d5d', // Optional: Hover color
-  'primary-active': '#1a3d5d' // Optional: Active color
+  'primary-hover': '#1a3d5d',
+  'primary-active': '#1a3d5d'
 })
-// updatePrimaryPalette({
-//   'primary': '#385986',
-//   'primary-hover' : '#2c4668',
-//   'primary-active' : '#2c4668',
-// })
 
 app.mount('#app')
