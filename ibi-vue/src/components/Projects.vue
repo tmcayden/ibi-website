@@ -18,7 +18,7 @@ const imagePaths = ref([])
 async function refresh() {
   isLoading.value = true
   const { data = [] } = await supabase.from('projects').select('*')
-    .order('created_date', { ascending: false }).eq('is_active', true)
+    .order('created_date', { ascending: false }).eq('is_active', true).eq('is_private', false)
   projects.value = data
   isLoading.value = false
   getImagePaths()

@@ -1,3 +1,5 @@
-<script setup></script>
+<script setup>
+</script>
 
-<template>Contact</template>
+<template>
+</template>

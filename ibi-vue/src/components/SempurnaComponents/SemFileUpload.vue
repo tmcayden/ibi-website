@@ -62,6 +62,7 @@ watchEffect(() => {
       <Button
         as="label"
         for="single"
+        :class="path ? 'mt-3' : ''"
         :label="uploading ? 'Uploading ...' : path ? 'Replace Image' : 'Upload Image'"
         icon="pi pi-upload"
         v-tooltip.top="readonly ? 'A category is required before file upload' : ''"

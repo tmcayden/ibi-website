@@ -19,6 +19,7 @@ async function refresh() {
     .select('*')
     .order('created_at', { ascending: false })
     .eq('is_active', true)
+    .eq('is_private', false)
   reviews.value = data
   isLoading.value = false
 }
@@ -38,7 +39,7 @@ onMounted(async () => await refresh())
 
 <template>
   <div v-if="reviews.length > 0 && !isLoading" class="flex flex-wrap justify-around">
-    <Card v-for="review in reviews" class="w-96 m-3 bg-zinc-800">
+    <Card v-for="review in reviews" v-bind:key="review.id" class="w-96 m-3 bg-zinc-800">
       <template #content>
         <div class="flex items-center text-slate-300 tracking-widest">
           <p>{{ review.review }}</p>
