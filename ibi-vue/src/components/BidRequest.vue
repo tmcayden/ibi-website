@@ -19,6 +19,8 @@ const props = defineProps({
 
 // Setup
 const toast = useToast()
+const fromEmail = import.meta.env.VITE_FROM_EMAIL
+const toEmail = import.meta.env.VITE_TO_EMAIL
 
 // Validation schema
 const validationSchema = yup.object({
@@ -59,49 +61,25 @@ const contactIcon = computed(() => {
 
 // Actions
 const requestABid = async () => {
-  const emailData = {
-    user_name: bidRequest.value.name,
-      user_email: bidRequest.value.email,
-      user_phone: bidRequest.value.phone
-  };
-
-  try {
-    const response = await fetch('/.netlify/functions/sendEmail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+  await fetch(
+  `/.netlify/functions/emails/bidRequst`,
+  {
+    headers: {
+      "netlify-emails-secret": import.meta.env.VITE_NETLIFY_EMAILS_SECRET,
+    },
+    method: "POST",
+    body: JSON.stringify({
+      from: fromEmail,
+      to: toEmail,
+      subject: `${bidRequest.value.name} Wants You to Reach Out!`,
+      parameters: {
+        user_name: bidRequest.value.name,
+        user_phone: bidRequest.value.phone,
+        user_email: bidRequest.value.email,
       },
-      body: JSON.stringify({
-        template: 'bidRequest',      // Template name (e.g., 'bidRequest')
-        data: emailData,             // Data to populate template (e.g., name, email, etc.)
-        to: import.meta.env.VITE_TO_EMAIL, // The recipient email
-        subject: 'New Bid Request'   // Subject of the email
-      }),
-    });
-
-    if (response.ok) {
-      toast.add({
-        severity: 'info',
-        summary: 'Bid Requested',
-        detail: 'We will contact you shortly.',
-        life: 3000
-      })
-    } else {
-      toast.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Unable to send request. Please contact us directly.',
-        life: 3000
-      });
-    }
-  } catch (error) {
-    toast.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Unable to send request. Please contact us directly.',
-        life: 3000
-      });
+    }),
   }
+);
 }
 
 // Submit handler
