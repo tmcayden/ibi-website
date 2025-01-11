@@ -140,6 +140,7 @@ onMounted(() => {
 })
 
 watch(() => route.name, updateBackgroundImage)
+watch(() => route.params, updateBackgroundImage)
 </script>
 
 <template>
@@ -216,7 +217,7 @@ watch(() => route.name, updateBackgroundImage)
                     <template #content>
                         <a href="tel:435-828-3309" class="m-2 block">Terran Harvey | (435) 828-3309</a>
                         <a href="tel:435-219-6300" class="m-2 block">Mitch Larsen | (435) 219-6300</a>
-                        <div class='font-thin text-center m-2'>Monday - Friday (8 - 5)</div> 
+                        <div class='font-thin text-center m-2'>Monday - Friday (8 - 5)</div>
                         <a href="mailto:contracting.IBI@gmail.com?subject='Request%20From%20Website'"
                             class="m-2 block">contracting.IBI@gmail.com</a>
                         <div class="flex justify-center gap-5 text-xl">
@@ -229,7 +230,7 @@ watch(() => route.name, updateBackgroundImage)
                         </div>
                     </template>
                 </Card>
-                <BidRequest class="w-full md:w-96"/>
+                <BidRequest class="w-full md:w-96" :show-effect="false"/>
             </div>
         </div>
     </Panel>

@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@netlify/emails": "^1.1.0",
     "@primevue/themes": "^4.1.1",
     "@supabase/supabase-js": "^2.45.6",
     "pinia": "^2.2.4",

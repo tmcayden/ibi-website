@@ -39,7 +39,6 @@ const showProjectModal = ref(false)
 const validationSchema = yup.object({
     project_name: yup.string().required('Project Name is required'),
     category: yup.string().required('Category is required'),
-    description: yup.string().required('Description is required'),
     is_active: yup.boolean()
 })
 
@@ -47,13 +46,13 @@ const columns = [
     { field: 'project_name', header: 'Project', type: 'detail' },
     { field: 'category', header: 'Category' },
     { field: 'description', header: 'Description' },
-    { field: 'is_active', header: 'Active', type: 'bool' },
+    { field: 'is_active', header: 'Show on Home', type: 'bool' },
     { field: 'is_private', header: 'Private', type: 'bool' },
     { field: 'start_date', header: 'Start Date', type: 'date' },
     { field: 'end_date', header: 'End Date', type: 'date' },
     { field: 'image_path', header: 'Image', type: 'image' },
     { field: 'created_date', header: 'Date Created', type: 'date' },
-    { field: 'parent_project_id', header: 'Parent Project Id' }
+    { field: 'parent_project_id', header: 'Parent Project' }
 ]
 
 const isNew = computed(() => !project.value.id)
@@ -71,7 +70,6 @@ async function refresh() {
     const { data = [], error } = await supabase.from('projects').select('*')
     if (error) toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 2000 })
     else projects.value = data
-    console.log(projects.value)
     isLoading.value = false
 }
 
@@ -220,14 +218,14 @@ onMounted(async () => {
             <SemSelect v-model="project.parent_project_id" id="parent_project_id"
                 :options="projects.filter(x => x.id != project.id)" optionLabel='project_name' optionValue='id'
                 label="Assign to Another Project?" class="w-80"
-                v-tooltip="'Hide the project from the gallery and show it inside the selected project.'" />
+                v-tooltip="'Hide the project from the gallery and home and show it inside the selected project.'" />
             <SemTextArea v-model="project.description" id="description" label="Description" class="w-full" />
             <SemFileUpload :readonly="disableFileUpload" v-model:category="project.category"
                 v-model:path="project.image_path" id="image_path" label="Image" />
-            <SemCheckBox v-model="project.is_active" id="is_active" label="Active?"
+            <SemCheckBox v-model="project.is_active" id="is_active" label="Show on Home?"
                 v-tooltip="'Show the project on the Home Page'" />
             <SemCheckBox v-model="project.is_private" id="is_private" label="Private?"
-                v-tooltip="'Override the \'Active\' flag and hide this project from the public'" />
+                v-tooltip="'Override the \'Show on Home\' flag and hide this project from the public'" />
         </div>
         <template #footer>
             <Button label="Cancel" icon="pi pi-times" severity="secondary" @click="showProjectModal = false" />

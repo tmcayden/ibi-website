@@ -1,5 +1,4 @@
 <script setup>
-import FloatLabel from 'primevue/floatlabel'
 import RadioButton from 'primevue/radiobutton'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
@@ -9,6 +8,14 @@ import { useForm, Field } from 'vee-validate'
 import * as yup from 'yup'
 import SemInputText from './SempurnaComponents/SemInputText.vue'
 import Message from 'primevue/message'
+
+// Props
+const props = defineProps({
+  showEffect: {
+    type: Boolean,
+    default: true
+  }
+})
 
 // Setup
 const toast = useToast()
@@ -40,7 +47,7 @@ const { handleSubmit, errors } = useForm({
 // State
 const bidRequest = ref({
   name: '',
-  contactMethod: 'phone',
+  contactMethod: '',
   email: '',
   phone: ''
 })
@@ -51,13 +58,50 @@ const contactIcon = computed(() => {
 })
 
 // Actions
-const requestABid = () => {
-  toast.add({
-    severity: 'info',
-    summary: 'Bid Requested',
-    detail: 'We will contact you shortly.',
-    life: 3000
-  })
+const requestABid = async () => {
+  const emailData = {
+    user_name: bidRequest.value.name,
+      user_email: bidRequest.value.email,
+      user_phone: bidRequest.value.phone
+  };
+
+  try {
+    const response = await fetch('/.netlify/functions/sendEmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        template: 'bidRequest',      // Template name (e.g., 'bidRequest')
+        data: emailData,             // Data to populate template (e.g., name, email, etc.)
+        to: import.meta.env.VITE_TO_EMAIL, // The recipient email
+        subject: 'New Bid Request'   // Subject of the email
+      }),
+    });
+
+    if (response.ok) {
+      toast.add({
+        severity: 'info',
+        summary: 'Bid Requested',
+        detail: 'We will contact you shortly.',
+        life: 3000
+      })
+    } else {
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to send request. Please contact us directly.',
+        life: 3000
+      });
+    }
+  } catch (error) {
+    toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Unable to send request. Please contact us directly.',
+        life: 3000
+      });
+  }
 }
 
 // Submit handler
@@ -69,7 +113,7 @@ const onSubmit = handleSubmit((values) => {
 <template>
   <Card
     class="p-3 animate-duration-1000 w-96"
-    v-animateonscroll="{ enterClass: 'animate-fadeinright' }"
+    v-animateonscroll="{ enterClass: showEffect ? 'animate-fadeinright' : '' }"
   >
     <template #header>
       <p class="text-xl text-center font-medium w-full tracking-wider">

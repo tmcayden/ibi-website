@@ -43,7 +43,7 @@ const columns = [
     { field: 'rating', header: 'Rating' },
     { field: 'source', header: 'Source' },
     { field: 'review', header: 'Review' },
-    { field: 'is_active', header: 'Active', type: 'bool' },
+    { field: 'is_active', header: 'Show on Home?', type: 'bool' },
     { field: 'is_private', header: 'Private', type: 'bool' },
     { field: 'created_at', header: 'Date Created', type: 'date' }
 ]
@@ -201,9 +201,9 @@ onMounted(async () => {
             <SemInputText v-model="review.customer_name" id="customer_name" label="Name" />
             <SemInputNumber v-model="review.rating" id="rating" label="Rating" />
             <SemInputText v-model="review.source" id="source" label="Source" />
-            <SemCheckBox v-model="review.is_active" id="is_active" label="Active?" />
+            <SemCheckBox v-model="review.is_active" id="is_active" label="Show on Home?" v-tooltip="'Show the review on the Home Page'" />
             <SemCheckBox v-model="review.is_private" id="is_private" label="Private?"
-                v-tooltip="'Override the \'Active\' flag and hide this review from the public'" />
+                v-tooltip="'Override the \'Show on Home\' flag and hide this review from the public'" />
             <SemTextArea v-model="review.review" id="review" label="Review" class="w-full" />
         </div>
         <template #footer>
