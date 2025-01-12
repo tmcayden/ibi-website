@@ -53,6 +53,8 @@ const bidRequest = ref({
   email: '',
   phone: ''
 })
+const loading = ref(false)
+const submitted = ref(false)
 
 // Computed
 const contactIcon = computed(() => {
@@ -61,25 +63,44 @@ const contactIcon = computed(() => {
 
 // Actions
 const requestABid = async () => {
-  await fetch(
-  `/.netlify/functions/emails/bidRequst`,
-  {
-    headers: {
-      "netlify-emails-secret": import.meta.env.VITE_NETLIFY_EMAILS_SECRET,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      from: fromEmail,
-      to: toEmail,
-      subject: `${bidRequest.value.name} Wants You to Reach Out!`,
-      parameters: {
-        user_name: bidRequest.value.name,
-        user_phone: bidRequest.value.phone,
-        user_email: bidRequest.value.email,
-      },
-    }),
+  try{
+    loading.value = true
+    await fetch(
+      `/.netlify/functions/emails/bidRequst`,
+      {
+        headers: {
+          "netlify-emails-secret": import.meta.env.VITE_NETLIFY_EMAILS_SECRET,
+        },
+        method: "POST",
+        body: JSON.stringify({
+          from: fromEmail,
+          to: toEmail,
+          subject: `${bidRequest.value.name} Wants You to Reach Out!`,
+          parameters: {
+            user_name: bidRequest.value.name,
+            user_phone: bidRequest.value.phone,
+            user_email: bidRequest.value.email,
+          },
+        }),
+      })
+      toast.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Your bid request has been sent!',
+        life: 2000
+      })
+      submitted.value = true
+    }
+  catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'We could not send your bid request. Please contact us directly.',
+      life: 2000
+    })
+    submitted.value = false
   }
-);
+  loading.value = false
 }
 
 // Submit handler
@@ -137,12 +158,23 @@ const onSubmit = handleSubmit((values) => {
           class="w-full"
         />
         <Button
+          v-if="!submitted"
           v-ripple
           label="Request"
           :icon="contactIcon"
           rounded
           class="text-center w-full"
           type="submit"
+          :loading="loading"
+        />
+        <Button
+          link
+          v-else
+          v-ripple
+          label="Thank you for your request!"
+          rounded
+          class="text-center w-full"
+          disabled
         />
       </form>
     </template>
