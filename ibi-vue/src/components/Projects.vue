@@ -71,8 +71,16 @@ onMounted(async () => await refresh())
     </Card>
   </div>
   <ProgressSpinner v-else />
-  <div v-if="user.isLoggedIn" class="w-full text-center p-2">
+  <div class="w-full text-center p-2">
     <Button
+      label="Gallery"
+      as="router-link"
+      icon="pi pi-images"
+      class="w-48"
+      :to="{ name: 'gallery' }"
+    />
+    <Button
+      v-if="user.isLoggedIn"
       label="Manage Projects"
       as="router-link"
       severity="secondary"

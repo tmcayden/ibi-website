@@ -18,7 +18,6 @@ async function refresh() {
     .from('customer_reviews')
     .select('*')
     .order('created_at', { ascending: false })
-    .eq('is_active', true)
     .eq('is_private', false)
   reviews.value = data
   isLoading.value = false
@@ -76,17 +75,9 @@ onMounted(async () => await refresh())
       </template>
     </Card>
   </div>
-  <ProgressSpinner v-else-if="is=loading" />
-  <div class="w-full text-center p-2">
+  <ProgressSpinner v-else />
+  <div v-if="user.isLoggedIn" class="w-full text-center p-2">
     <Button
-      label="All Reviews"
-      as="router-link"
-      icon="pi pi-star"
-      class="w-48"
-      :to="{ name: 'reviews' }"
-    />
-    <Button
-    v-if="user.isLoggedIn"
       label="Manage Reviews"
       as="router-link"
       icon="pi pi-pen-to-square"

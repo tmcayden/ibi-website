@@ -31,6 +31,12 @@ const navItems = ref([
         command: () => router.push('/gallery')
     },
     {
+        label: 'Reviews',
+        icon: 'pi pi-star',
+        class: 'text-xl',
+        command: () => router.push('/reviews')
+    },
+    {
         label: 'Contact',
         icon: 'pi pi-envelope',
         class: 'text-xl',
@@ -80,6 +86,9 @@ async function updateBackgroundImage() {
             break
         case 'contact':
             imageUrl = '/home-7.jpg'
+            break
+        case 'reviews':
+            imageUrl = '/FramingPhoto.jpg'
             break
         case 'login':
             imageUrl = '/blue-bubble-bg.png'

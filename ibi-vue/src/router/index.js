@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue'
-import { useUserStore } from '../stores/userStore'
 
 const routes = [
   {
@@ -14,6 +13,12 @@ const routes = [
     name: 'gallery',
     meta: { title: 'Gallery' },
     component: () => import('../views/GalleryView.vue')
+  },
+  {
+    path: '/reviews',
+    name: 'reviews',
+    meta: { title: 'Reviews' },
+    component: () => import('../views/ReviewView.vue')
   },
   {
     path: '/contact',
