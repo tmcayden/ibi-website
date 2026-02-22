@@ -27,7 +27,7 @@ async function refresh() {
 async function getImagePaths() {
   var paths = []
   for (const image of projects.value) {
-    const data = await getFileUrl('projects', image.image_path)
+    const data = await getFileUrl('projects', image.image_path, { width: 400, quality: 75 })
     paths.push({ id: image.id, path: data })
   }
   imagePaths.value = paths
@@ -56,6 +56,7 @@ onMounted(async () => await refresh())
               :src="imagePaths.find((x) => x.id == project.id).path"
               :alt="project.name"
               class="avatar image"
+              loading="lazy"
             />
             <p class="text-2xl">{{ project.project_name }}</p>
             <div class="flex w-full justify-center text-stone-400">

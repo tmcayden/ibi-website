@@ -19,7 +19,13 @@ export async function downloadFiles(bucket, files) {
   return srcs
 }
 
-export async function getFileUrl(bucket, filename) {
-  const { data } = await supabase.storage.from(bucket).getPublicUrl(filename)
+export async function getFileUrl(bucket, filename, { width, height, quality } = {}) {
+  const transform = {}
+  if (width) transform.width = width
+  if (height) transform.height = height
+  if (quality) transform.quality = quality
+
+  const options = Object.keys(transform).length > 0 ? { transform } : {}
+  const { data } = await supabase.storage.from(bucket).getPublicUrl(filename, options)
   if (data) return data.publicUrl
 }

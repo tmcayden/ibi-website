@@ -3,6 +3,7 @@ import { ref, toRefs, watchEffect } from 'vue'
 import { supabase } from '../../supabase'
 import { useToast } from 'primevue/usetoast'
 import { downloadFile } from '../../util/supabase/downloadFile'
+import { compressImage } from '../../util/compressImage'
 import Button from 'primevue/button'
 
 // setup
@@ -27,9 +28,8 @@ const uploadImage = async (event) => {
       throw new Error('You must select an image to upload.')
     }
 
-    const file = files.value[0]
-    const fileExt = file.name.split('.').pop()
-    const filePath = `${category.value}/${Date.now()}.${fileExt}`
+    const file = await compressImage(files.value[0])
+    const filePath = `${category.value}/${Date.now()}.webp`
 
     const { error: uploadError } = await supabase.storage.from('projects').upload(filePath, file)
 
@@ -37,16 +37,17 @@ const uploadImage = async (event) => {
     emit('update:path', filePath)
     emit('upload')
   } catch (error) {
-    toast.add({ severity: 'error', summary: 'Error', detail: uploadError.message, life: 2000 })
-  } finally {
-    toast.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Image uploaded successfully',
-      life: 2000
-    })
+    toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 2000 })
     uploading.value = false
+    return
   }
+  toast.add({
+    severity: 'success',
+    summary: 'Success',
+    detail: 'Image uploaded successfully',
+    life: 2000
+  })
+  uploading.value = false
 }
 
 watchEffect(() => {
@@ -56,7 +57,7 @@ watchEffect(() => {
 
 <template>
   <div>
-    <img v-if="src" :src="src" alt="Avatar" class="avatar image" />
+    <img v-if="src" :src="src" alt="Avatar" class="avatar image" loading="lazy" />
     <div v-else class="avatar no-image" />
     <div>
       <Button

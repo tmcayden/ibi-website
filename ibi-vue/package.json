@@ -13,6 +13,7 @@
     "@netlify/emails": "^1.1.0",
     "@primevue/themes": "^4.1.1",
     "@supabase/supabase-js": "^2.45.6",
+    "browser-image-compression": "^2.0.2",
     "pinia": "^2.2.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.1.1",

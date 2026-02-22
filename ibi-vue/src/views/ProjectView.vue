@@ -12,6 +12,7 @@ import { getFileUrl } from '../util/supabase/downloadFile'
 import { useScreenSizeStore } from '../stores/screenSizeStore'
 import { useConfirm } from 'primevue/useconfirm'
 import { deleteFileFromStorageByBucketAndPath, deleteFileFromTableByBucketAndId } from '../util/supabase/deleteFile'
+import { compressImage } from '../util/compressImage'
 import GalleryView from './GalleryView.vue'
 
 const props = defineProps({
@@ -52,15 +53,14 @@ async function getImagePaths() {
 }
 
 async function uploadPhoto(event) {
-  uploadPhoto.value = event.target.files
+  const selectedFiles = event.target.files
   try {
     uploading.value = true
-    if (!uploadPhoto.value || uploadPhoto.value.length === 0) {
+    if (!selectedFiles || selectedFiles.length === 0) {
       throw new Error('You must select an image to upload.')
     }
-    const file = uploadPhoto.value[0]
-    const fileExt = file.name.split('.').pop()
-    const filePath = `${project.project.category}/${Date.now()}.${fileExt}`
+    const file = await compressImage(selectedFiles[0])
+    const filePath = `${project.project.category}/${Date.now()}.webp`
 
     const { error: uploadError } = await supabase.storage.from('projects').upload(filePath, file)
 
@@ -174,7 +174,7 @@ onMounted(() => {
     <div class="flex flex-wrap justify-center">
       <div v-for="image in imagePaths" :key="image.id" class="m-2 flex flex-wrap">
         <Button v-if="user.isLoggedIn" link class="text-red-500 pi pi-times w-8 h-8" @click="confirmImageDelete(image.id, image.image_path)" />
-        <Image :src="image.path" alt="Project Image" :width="galleryWidth" preview />
+        <Image :src="image.path" alt="Project Image" :width="galleryWidth" preview loading="lazy" />
       </div>
     </div>
     <GalleryView :parentProjectId="props.id" />
